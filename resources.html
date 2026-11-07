@@ -185,7 +185,7 @@
             <p>Скористайтеся перевіреними державними та освітніми ресурсами для детального планування кар'єрного шляху:</p>
             
             <div class="image-container">
-                <img src="https://osvita.ua/doc/images/news/853/85374/main.jpg" alt="Освітні можливості та кар'єра в Україні">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Освітні можливості та кар'єра в Україні">
                 <div class="image-caption">Державні цифрові ініціативи для вибору майбутньої професії</div>
             </div>
 
@@ -220,7 +220,7 @@
             <p>Поділіться своїми враженнями від платформи:</p>
             
             <div class="image-container">
-                <img src="https://nus.org.ua/wp-content/uploads/2021/08/shkolyar-1024x683.jpg" alt="Учень заповнює форму зворотного зв'язку">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80" alt="Учень заповнює форму зворотного зв'язку">
                 <div class="image-caption">Ваша думка допомагає робити навчання цікавішим та ефективнішим</div>
             </div>
 
@@ -255,7 +255,6 @@
     </footer>
 
     <script>
-        // Посилання на ваш розгорнутий вебдодаток Google Apps Script
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYsST0NBYYUoenroV1rPzW-AoIs9nvP4hZvL1sn1yw0E-HZvC7Vw5KWvnJpUWxIeYMOw/exec";
 
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
@@ -265,28 +264,27 @@
             submitBtn.disabled = true;
             submitBtn.innerText = "Відправляється...";
 
-            const formData = {
+            const data = {
                 name: document.getElementById('userName').value,
                 rating: document.getElementById('userRating').value + "/5",
                 feedback: document.getElementById('userFeedback').value
             };
 
-            // Відправка даних безпосередньо у вашу захищену Google Таблицю
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(data)
             })
             .then(() => {
-                alert('Дякуємо! Ваш відгук успішно надіслано.');
+                alert('Дякуємо! Ваш відгук успішно надіслано в систему.');
                 this.reset();
             })
             .catch(error => {
-                console.error('Помилка:', error);
-                alert('Сталася помилка при відправці. Спробуйте ще раз.');
+                console.error('Помилка:', error.message);
+                alert('Сталася помилка при відправці. Перевірте підключення.');
             })
             .finally(() => {
                 submitBtn.disabled = false;
