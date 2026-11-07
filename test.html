@@ -55,7 +55,7 @@
 
         .container {
             max-width: 900px;
-            margin: 2rem auto;
+            margin: 2.5rem auto;
             padding: 0 1rem;
             flex: 1;
         }
@@ -67,6 +67,7 @@
             margin-bottom: 2rem;
         }
         .card h2 { color: var(--primary-dark); margin-top: 0; }
+        
         .btn {
             display: inline-block;
             background-color: var(--primary);
@@ -80,6 +81,8 @@
             transition: background 0.2s;
         }
         .btn:hover { background-color: var(--primary-dark); }
+        .btn-success { background-color: var(--accent); }
+        .btn-success:hover { background-color: #0f766e; }
         
         .question-box { margin-bottom: 1.5rem; }
         .options label {
@@ -107,6 +110,27 @@
             height: 100%;
             width: 0%;
             transition: width 0.3s ease;
+        }
+
+        /* Стилі спеціально для друку / збереження в PDF/скрін */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #result-container, #result-container * {
+                visibility: visible;
+            }
+            #result-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
         }
 
         footer {
@@ -154,8 +178,12 @@
             <div id="result-container" style="display:none;">
                 <h3>Результати діагностики (ДДО Клімова)</h3>
                 <p id="result-text" style="font-size: 1.05rem; line-height: 1.7;"></p>
-                <div id="scores-breakdown" style="margin: 1.5rem 0; background: #f8fafc; padding: 1rem; border-radius: 8px;"></div>
-                <button class="btn" id="restart-btn">Пройти тест знову</button>
+                <div id="scores-breakdown" style="margin: 1.5rem 0; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;"></div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;" class="no-print">
+                    <button class="btn btn-success" onclick="saveResultAsPDF()">📥 Зберегти результат (PDF / Друк)</button>
+                    <button class="btn" id="restart-btn">Пройти тест знову</button>
+                </div>
             </div>
         </section>
     </div>
@@ -165,7 +193,6 @@
     </footer>
 
     <script>
-        // Повний стандартний набір з 20 питань ДДО Клімова (де кожна пара відповідає певній категорії)
         const questions = [
             {
                 pair: [
@@ -200,7 +227,7 @@
             {
                 pair: [
                     { text: "Проєктувати нові будівлі, споруди, машини", type: "tech" },
-                    { text: "Проектувати нові види одягу, зачіски, оформлювати інтер'єр", type: "art" }
+                    { text: "Проєктувати нові види одягу, зачіски, оформлювати інтер'єр", type: "art" }
                 ]
             },
             {
@@ -296,7 +323,6 @@
             let q = questions[currentQuestionIndex];
             document.getElementById("question-text").innerText = `${currentQuestionIndex + 1}. Що вам більше подобається?`;
             
-            // Оновлюємо шкалу прогресу
             let progress = ((currentQuestionIndex) / questions.length) * 100;
             document.getElementById("progress-fill").style.width = `${progress}%`;
 
@@ -331,7 +357,6 @@
             document.getElementById("next-btn").style.display = "none";
             document.getElementById("progress-fill").style.width = "100%";
             
-            // Знаходимо категорію з максимальним балом
             let bestType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             
             let descriptions = {
@@ -339,7 +364,7 @@
                 tech: "Ваш домінуючий тип спрямованості — <strong>«Людина — Техніка»</strong>. Ваша стихія — машини, механізми, матеріали, будівництво та IT-технології. Підходящі професії: інженер, розробник ПЗ, архітектор, автомеханік, робототехнік.",
                 people: "Ваш домінуючий тип спрямованості — <strong>«Людина — Людина»</strong>. Ви маєте схильність до роботи з людьми, комунікації, навчання та обслуговування. Підходящі професії: вчитель, психолог, лікар, юрист, менеджер з персоналу, соціальний працівник.",
                 signs: "Ваш домінуючий тип спрямованості — <strong>«Людина — Знакова система»</strong>. Вам до вподоби цифри, формули, таблиці, коди, тексти та бухгалтерія. Підходящі професії: програміст, економіст, фінансист, перекладач, аналітик даних, логіст.",
-                art: "Ваш доміynyчий тип спрямованості — <strong>«Людина — Художній образ»</strong>. Ви яскраво виявляєте творчі здібності, естетичне сприйняття та художній смак. Підходящі професії: дизайнер, художник, журналіст, режисер, актор, фотограф."
+                art: "Ваш домінуючий тип спрямованості — <strong>«Людина — Художній образ»</strong>. Ви яскраво виявляєте творчі здібності, естетичне сприйняття та художній смак. Підходящі професії: дизайнер, художник, журналіст, режисер, актор, фотограф."
             };
 
             let categoryNames = {
@@ -369,6 +394,10 @@
             document.getElementById("quiz-container").style.display = "block";
             document.getElementById("next-btn").style.display = "inline-block";
             loadQuestion();
+        }
+
+        function saveResultAsPDF() {
+            window.print();
         }
 
         document.addEventListener("DOMContentLoaded", function() {
