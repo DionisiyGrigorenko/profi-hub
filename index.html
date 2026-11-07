@@ -16,14 +16,31 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-radius: 16px;
+            --nav-bg: #ffffff;
+            --box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.1);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        [data-theme="dark"] {
+            --primary: #818CF8;
+            --primary-dark: #6366F1;
+            --teal: #2DD4BF;
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --nav-bg: #1E293B;
+            --box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
         body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; line-height: 1.6; }
+        
         nav {
-            background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: var(--nav-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 1.25rem;
             padding: 1rem;
             position: sticky;
@@ -31,62 +48,85 @@
             z-index: 100;
             flex-wrap: wrap;
         }
-        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: color 0.2s; font-size: 0.95rem; }
-        nav a:hover, nav a.active { color: var(--primary); }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
+        nav a:hover, nav a.active { color: var(--primary); opacity: 1; }
+
+        /* Кнопка перемикання теми */
+        .theme-toggle {
+            background: none;
+            border: 1.5px solid var(--text-muted);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: scale(1.05);
+        }
 
         header { text-align: center; padding: 3rem 1rem 1.5rem 1rem; }
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary), #9333EA);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
-        header p { font-size: 1.1rem; color: var(--text-muted); }
+        header p { font-size: 1.12rem; color: var(--text-muted); }
 
         .container { max-width: 960px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
 
         .hero-card {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--border-radius);
             padding: 2.5rem;
-            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.1);
+            box-shadow: var(--box-shadow);
             text-align: center;
             margin-bottom: 2rem;
         }
         .hero-card img {
             width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
-        .hero-card h2 { font-size: 1.75rem; color: var(--text-main); margin-bottom: 1rem; font-weight: 800; }
+        .hero-card h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 1rem; font-weight: 800; }
         .hero-card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
 
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary), #6366F1);
-            color: white; padding: 0.9rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 700;
-            font-size: 1.05rem; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25); transition: transform 0.1s;
+            color: white; padding: 0.9rem 2.2rem; border-radius: 14px; text-decoration: none; font-weight: 700;
+            font-size: 1.05rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3); transition: transform 0.2s, box-shadow 0.2s;
         }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.4); }
         .btn-primary:active { transform: scale(0.98); }
 
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .feature-box {
-            background: #ffffff; border: 1px solid #E2E8F0; border-radius: var(--border-radius); padding: 1.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: transform 0.2s;
+            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--border-radius); padding: 1.75rem;
+            box-shadow: var(--box-shadow); transition: transform 0.25s, box-shadow 0.25s;
         }
-        .feature-box:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.06); }
-        .feature-box i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
-        .feature-box h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .feature-box:hover { transform: translateY(-6px); box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.15); }
+        .feature-box i { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
+        .feature-box h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 700; }
         .feature-box p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; }
-        .feature-box a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+        .feature-box a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; }
         .feature-box a:hover { text-decoration: underline; }
 
-        footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
+        footer { text-align: center; padding: 1.5rem; background: var(--nav-bg); color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(100,100,100,0.1); margin-top: auto; }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
     <nav>
         <a href="index.html" class="active">Головна</a>
@@ -95,6 +135,9 @@
         <a href="future-jobs.html">Професії майбутнього</a>
         <a href="parents.html">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
+        <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
     </nav>
 
     <header>
@@ -128,7 +171,7 @@
             <div class="feature-box">
                 <i class="fa-solid fa-rocket"></i>
                 <h3>Професії майбутнього</h3>
-                <p>Інтерактивний каталоґ затребуваних та перспективних фахів у галузях IT, AI та екології.</p>
+                <p>Інтерактивний каталог затребуваних та перспективних фахів у галузях IT, AI та екології.</p>
                 <a href="future-jobs.html">Переглянути ➔</a>
             </div>
 
@@ -144,6 +187,20 @@
     <footer>
         Вихренко Ірина, Умань, 2026 рік
     </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
 
 </body>
 </html>
