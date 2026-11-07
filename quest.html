@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Профорієнтаційний навігатор | Profi-Quest</title>
-    
-    <!-- FontAwesome & Google Fonts -->
+    <title>SkillUp | Profi-Quest</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- html2canvas для створення скріншоту-сертифіката -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
             --teal: #0d9488;
-            --teal-hover: #0f766e;
             --success: #10B981;
             --danger: #EF4444;
             --bg-gradient: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 40%, #F3E8FF 100%);
@@ -25,500 +20,95 @@
             --card-border: rgba(255, 255, 255, 0.8);
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --shadow-sm: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-            --shadow-lg: 0 20px 40px -15px rgba(37, 99, 235, 0.15);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Навігація сайту */
         nav {
-            background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 1rem;
-            width: 100%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center;
+            gap: 1.25rem; padding: 1rem; width: 100%; position: sticky; top: 0; z-index: 1000; flex-wrap: wrap;
         }
-        nav a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: color 0.2s;
-        }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
         nav a:hover, nav a.active { color: var(--teal); }
 
-        /* Контейнер додатку */
-        .app-wrapper {
-            width: 100%;
-            max-width: 480px;
-            padding: 20px 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            margin: auto;
-        }
+        .app-wrapper { width: 100%; max-width: 480px; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; flex: 1; margin: auto; }
+        header.quest-header { text-align: center; margin-bottom: 15px; width: 100%; }
+        header.quest-header h1 { font-size: 1.6rem; color: var(--teal); font-weight: 800; margin-bottom: 4px; }
+        header.quest-header p { font-size: 0.9rem; color: var(--text-muted); }
 
-        header.quest-header {
-            text-align: center;
-            margin-bottom: 15px;
-            width: 100%;
-        }
+        .progress-bar-container { width: 100%; height: 8px; background: rgba(226, 232, 240, 0.9); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--teal), var(--primary)); transition: width 0.3s ease; border-radius: 10px; }
 
-        header.quest-header h1 {
-            font-size: 1.6rem;
-            color: var(--teal);
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
+        .screen { width: 100%; display: none; flex-direction: column; align-items: center; animation: fadeIn 0.4s ease; }
+        .screen.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        header.quest-header p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+        .form-card { background: var(--card-bg); border-radius: 24px; padding: 28px 22px; width: 100%; border: 1px solid var(--card-border); box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.15); }
+        .form-card h2 { font-size: 1.4rem; margin-bottom: 6px; text-align: center; font-weight: 800; }
+        .form-card p { color: var(--text-muted); font-size: 0.88rem; text-align: center; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 14px; background: #FFF; border: 1.5px solid #CBD5E1; border-radius: 12px; outline: none; }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(226, 232, 240, 0.9);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
+        .btn-submit { width: 100%; padding: 14px; border: none; border-radius: 14px; background: linear-gradient(135deg, var(--teal), #0f766e); color: #FFF; font-weight: 700; font-size: 1rem; cursor: pointer; }
 
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--teal), var(--primary));
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
+        .card-stack { width: 100%; height: 420px; position: relative; perspective: 1000px; }
+        .swipe-card { position: absolute; width: 100%; height: 100%; border-radius: 28px; background: var(--card-bg); border: 1.5px solid #FFF; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; touch-action: none; cursor: grab; }
+        .card-badge { align-self: flex-start; padding: 5px 12px; border-radius: 20px; background: #CCFBF1; font-size: 0.75rem; font-weight: 800; color: var(--teal); }
+        .card-content { text-align: center; margin: auto 0; }
+        .card-icon { font-size: 3.2rem; margin-bottom: 16px; background: linear-gradient(135deg, var(--teal), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-question { font-size: 1.25rem; font-weight: 800; color: #1E293B; }
+        .card-subtext { font-size: 0.88rem; color: var(--text-muted); margin-top: 10px; }
 
-        /* Screen Wrappers */
-        .screen {
-            width: 100%;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeIn 0.4s ease;
-        }
+        .stamp { position: absolute; top: 30px; padding: 6px 14px; border-radius: 12px; font-size: 1.2rem; font-weight: 800; opacity: 0; pointer-events: none; border: 3px solid; }
+        .stamp.like { right: 20px; color: var(--success); border-color: var(--success); background: rgba(16, 185, 129, 0.1); transform: rotate(12deg); }
+        .stamp.dislike { left: 20px; color: var(--danger); border-color: var(--danger); background: rgba(239, 68, 68, 0.1); transform: rotate(-12deg); }
 
-        .screen.active {
-            display: flex;
-        }
+        .controls { display: flex; justify-content: center; gap: 25px; margin-top: 20px; width: 100%; }
+        .btn-circle { width: 60px; height: 60px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; }
+        .btn-no { background: #FEF2F2; border: 2px solid #FCA5A5; color: var(--danger); }
+        .btn-yes { background: #ECFDF5; border: 2px solid #6EE7B7; color: var(--success); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .results-container { width: 100%; }
+        .result-card { background: #FFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 16px; margin-bottom: 12px; position: relative; }
+        .result-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--teal); }
+        .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .result-title { font-size: 1.05rem; font-weight: 800; }
+        .result-score { font-weight: 800; font-size: 0.8rem; padding: 3px 10px; border-radius: 10px; background: #CCFBF1; color: var(--teal); }
+        .result-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 10px; }
+        .skills-list { display: flex; flex-wrap: wrap; gap: 5px; }
+        .skill-tag { font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: #F1F5F9; color: #475569; }
 
-        /* Registration Screen */
-        .form-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 28px 22px;
-            width: 100%;
-            box-shadow: var(--shadow-lg);
-        }
+        #certificate-area { background: #FFF; padding: 20px; border-radius: 20px; border: 1px solid #E2E8F0; margin-bottom: 15px; }
+        .cert-user-info { text-align: center; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px dashed #E2E8F0; }
+        .cert-user-name { font-size: 1.3rem; font-weight: 800; }
 
-        .form-card h2 {
-            font-size: 1.4rem;
-            margin-bottom: 6px;
-            text-align: center;
-            color: #1E293B;
-            font-weight: 800;
-        }
+        .btn-action { padding: 13px; border-radius: 12px; border: none; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-bottom: 10px; }
+        .btn-share { background: linear-gradient(135deg, var(--teal), #0f766e); color: #FFF; }
+        .btn-restart { background: #FFF; color: #334155; border: 1.5px solid #CBD5E1; }
 
-        .form-card p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #334155;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
-            border-radius: 12px;
-            color: #0F172A;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--teal);
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--teal), var(--teal-hover));
-            color: #FFF;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(13, 148, 136, 0.25);
-            transition: transform 0.1s, opacity 0.2s;
-            margin-top: 8px;
-        }
-
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-
-        /* Game / Cards Screen */
-        .card-stack {
-            width: 100%;
-            height: 420px;
-            position: relative;
-            perspective: 1000px;
-        }
-
-        .swipe-card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 28px;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1.5px solid #FFFFFF;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.08);
-            touch-action: none;
-            cursor: grab;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-        }
-
-        .swipe-card:active {
-            cursor: grabbing;
-        }
-
-        .card-badge {
-            align-self: flex-start;
-            padding: 5px 12px;
-            border-radius: 20px;
-            background: #CCFBF1;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--teal);
-            border: 1px solid #99F6E4;
-        }
-
-        .card-content {
-            text-align: center;
-            margin: auto 0;
-        }
-
-        .card-icon {
-            font-size: 3.2rem;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--teal), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card-question {
-            font-size: 1.25rem;
-            font-weight: 800;
-            line-height: 1.35;
-            color: #1E293B;
-        }
-
-        .card-subtext {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            margin-top: 10px;
-            line-height: 1.4;
-        }
-
-        /* Choice Stamps */
-        .stamp {
-            position: absolute;
-            top: 30px;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.1s ease;
-            border: 3px solid;
-        }
-
-        .stamp.like {
-            right: 20px;
-            color: var(--success);
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.1);
-            transform: rotate(12deg);
-        }
-
-        .stamp.dislike {
-            left: 20px;
-            color: var(--danger);
-            border-color: var(--danger);
-            background: rgba(239, 68, 68, 0.1);
-            transform: rotate(-12deg);
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .btn-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
-            transition: transform 0.15s ease, background 0.2s;
-        }
-
-        .btn-circle:active {
-            transform: scale(0.9);
-        }
-
-        .btn-no {
-            background: #FEF2F2;
-            border: 2px solid #FCA5A5;
-            color: var(--danger);
-        }
-
-        .btn-yes {
-            background: #ECFDF5;
-            border: 2px solid #6EE7B7;
-            color: var(--success);
-        }
-
-        /* Results Screen */
-        .results-container {
-            width: 100%;
-        }
-
-        .result-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 5px; height: 100%;
-            background: var(--teal);
-        }
-
-        .result-card.top-1::before { background: #F59E0B; }
-        .result-card.top-2::before { background: #64748B; }
-        .result-card.top-3::before { background: #D97706; }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-
-        .result-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: #0F172A;
-        }
-
-        .result-score {
-            font-weight: 800;
-            font-size: 0.8rem;
-            padding: 3px 10px;
-            border-radius: 10px;
-            background: #CCFBF1;
-            color: var(--teal);
-        }
-
-        .result-desc {
-            font-size: 0.84rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .skill-tag {
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: #F1F5F9;
-            border: 1px solid #E2E8F0;
-            color: #475569;
-        }
-
-        /* Certificate Area */
-        #certificate-area {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid #E2E8F0;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 15px;
-        }
-
-        .cert-user-info {
-            text-align: center;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed #E2E8F0;
-        }
-
-        .cert-user-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #0F172A;
-        }
-
-        .cert-user-meta {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .btn-action {
-            padding: 13px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 700;
-            font-size: 0.92rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-action:active {
-            transform: scale(0.98);
-        }
-
-        .btn-share {
-            background: linear-gradient(135deg, var(--teal), var(--teal-hover));
-            color: #FFF;
-            box-shadow: 0 6px 15px rgba(13, 148, 136, 0.2);
-        }
-
-        .btn-restart {
-            background: #FFFFFF;
-            color: #334155;
-            border: 1.5px solid #CBD5E1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1.2rem;
-            background: #ffffff;
-            color: #64748b;
-            font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0;
-            margin-top: auto;
-            width: 100%;
-        }
+        footer { text-align: center; padding: 1.2rem; background: #ffffff; color: #64748b; font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; width: 100%; }
     </style>
 </head>
 <body>
 
-    <!-- Навігація між сторінками сайту -->
     <nav>
         <a href="index.html">Головна</a>
         <a href="quest.html" class="active">Profi-Quest</a>
         <a href="test.html">Експрес-тест</a>
+        <a href="future-jobs.html">Професії майбутнього</a>
+        <a href="parents.html">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
     </nav>
 
     <div class="app-wrapper">
-        
         <header class="quest-header">
             <h1>Модуль: Profi-Quest</h1>
             <p>Інтерактивний тренажер професійних схильностей</p>
             <div id="counter" style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted); display: none; margin-top: 6px;">
-                Питання <span id="current-card-num">1</span> з 20
+                Ппитання <span id="current-card-num">1</span> з 20
             </div>
         </header>
 
@@ -526,18 +116,15 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
 
-        <!-- SCREEN 1: Registration Form -->
         <div class="screen active" id="screen-reg">
             <div class="form-card">
                 <h2>Почати квест</h2>
                 <p>Дай відповіді на 20 питань свайпами, щоб отримати персональний зріз професійних інтересів.</p>
-                
                 <form id="reg-form" onsubmit="startQuest(event)">
                     <div class="form-group">
                         <label for="user-name">Твоє ім'я</label>
                         <input type="text" id="user-name" placeholder="Введіть ім'я" required autocomplete="off">
                     </div>
-
                     <div class="form-group">
                         <label for="user-gender">Стать</label>
                         <select id="user-gender" required>
@@ -546,7 +133,6 @@
                             <option value="Чоловіча">Чоловіча</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="user-grade">Клас</label>
                         <select id="user-grade" required>
@@ -557,55 +143,34 @@
                             <option value="11">11 клас</option>
                         </select>
                     </div>
-
                     <button type="submit" class="btn-submit">Розпочати квест <i class="fa-solid fa-arrow-right"></i></button>
                 </form>
             </div>
         </div>
 
-        <!-- SCREEN 2: Game Swipe Cards -->
         <div class="screen" id="screen-game">
-            <div class="card-stack" id="card-stack">
-                <!-- Динамічна картка -->
-            </div>
-
+            <div class="card-stack" id="card-stack"></div>
             <div class="controls">
-                <button class="btn-circle btn-no" onclick="handleButtonClick(false)">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <button class="btn-circle btn-yes" onclick="handleButtonClick(true)">
-                    <i class="fa-solid fa-heart"></i>
-                </button>
+                <button class="btn-circle btn-no" onclick="handleButtonClick(false)"><i class="fa-solid fa-xmark"></i></button>
+                <button class="btn-circle btn-yes" onclick="handleButtonClick(true)"><i class="fa-solid fa-heart"></i></button>
             </div>
         </div>
 
-        <!-- SCREEN 3: Results -->
         <div class="screen" id="screen-results">
             <div class="results-container">
-                
                 <div id="certificate-area">
                     <div class="cert-user-info">
                         <div class="cert-user-name" id="res-user-name">Учень</div>
                         <div class="cert-user-meta"><span id="res-user-grade">10</span> клас • Топ рекомендації професій</div>
                     </div>
-
-                    <div id="top-professions-list">
-                        <!-- Динамічні результати -->
-                    </div>
+                    <div id="top-professions-list"></div>
                 </div>
-
                 <div class="action-buttons">
-                    <button class="btn-action btn-share" onclick="downloadScreenshot()">
-                        <i class="fa-solid fa-camera"></i> Завантажити скріншот результату
-                    </button>
-                    <button class="btn-action btn-restart" onclick="restartQuest()">
-                        <i class="fa-solid fa-rotate-right"></i> Пройти знову
-                    </button>
+                    <button class="btn-action btn-share" onclick="downloadScreenshot()"><i class="fa-solid fa-camera"></i> Завантажити скріншот результату</button>
+                    <button class="btn-action btn-restart" onclick="restartQuest()"><i class="fa-solid fa-rotate-right"></i> Пройти знову</button>
                 </div>
-
             </div>
         </div>
-
     </div>
 
     <footer>
@@ -631,7 +196,7 @@
             { id: 15, cat: 'people', icon: 'fa-graduation-cap', badge: 'Освіта', title: 'Навчання інших', text: 'Подобається пояснювати складні речі просто та навчати інших людей новому?' },
             { id: 16, cat: 'it', icon: 'fa-brain', badge: 'ШІ та Дані', title: 'Штучний Інтелект', text: 'Захоплюєшся можливостями ChatGPT, Midjourney та розвитком ШІ?' },
             { id: 17, cat: 'business', icon: 'fa-scale-balanced', badge: 'Право', title: 'Закони та Захист', text: 'Цікаво відстоювати справедливість, вивчати закони та правильність договорів?' },
-            { id: 18, cat: 'design', icon: 'fa-house-laptop', badge: 'Простір', title: 'Інтер\'єр та Архітектура', text: 'Любиш планувати простір, проектувати будинки чи дизайн кімнат?' },
+            { id: 18, cat: 'design', icon: 'fa-house-laptop', badge: 'Простір', title: 'Інтер\'єр та Архітектура', text: 'Любиш планувати простір, проектирувати будинки чи дизайн кімнат?' },
             { id: 19, cat: 'media', icon: 'fa-video', badge: 'Відеовиробництво', title: 'Кіно та Монтаж', text: 'Хотів би створювати якісні відеоролики, обирати ракурси та працювати зі звуком?' },
             { id: 20, cat: 'business', icon: 'fa-lightbulb', badge: 'Стартапи', title: 'Генерація ідей', text: 'Постійно придумуєш нові ідеї для продуктів, сервісів чи покращення життя?' }
         ];
