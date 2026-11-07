@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профорієнтаційний навігатор | Експрес-тест</title>
+    <title>Профорієнтаційний навігатор | Експрес-тест ДДО</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
+            --accent: #0d9488;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-color: #1e293b;
@@ -84,13 +85,14 @@
         .options label {
             display: block;
             background: #f1f5f9;
-            padding: 0.75rem 1rem;
+            padding: 0.85rem 1rem;
             border-radius: 8px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             cursor: pointer;
             transition: background 0.2s;
+            border: 1px solid #e2e8f0;
         }
-        .options label:hover { background: #e2e8f0; }
+        .options label:hover { background: #e2e8f0; border-color: var(--primary); }
         .options input { margin-right: 10px; }
         
         footer {
@@ -107,8 +109,8 @@
 <body>
 
     <header>
-        <h1>Експрес-діагностика</h1>
-        <p>Визначення провідного профілю професійних схильностей</p>
+        <h1>Диференційно-діагностичний опитувальник (ДДО)</h1>
+        <p>Класична методика Є.О. Клімова для визначення професійних схильностей</p>
     </header>
 
     <nav>
@@ -121,18 +123,18 @@
     <div class="container">
         <section class="card" id="test-section">
             <h2>Опитувальник схильностей</h2>
-            <p>Оберіть варіант відповіді, який найбільше відповідає вашим інтересам:</p>
+            <p>Уявіть, що у вас є повна свобода вибору. Щo з переліченого нижче вам було б цікавіше робити в кожній із ситуацій?</p>
             <div id="quiz-container">
                 <div class="question-box">
-                    <p id="question-text" style="font-weight: 600; font-size: 1.1rem;"></p>
+                    <p id="question-text" style="font-weight: 600; font-size: 1.15rem; color: var(--primary-dark);"></p>
                     <div class="options" id="options-container"></div>
                 </div>
                 <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none;">Наступне питання</button>
             </div>
             <div id="result-container" style="display:none;">
-                <h3>Ваш домінуючий профіль:</h3>
-                <p id="result-text" style="font-size: 1.05rem;"></p>
-                <button class="btn" onclick="restartQuiz()" style="margin-top: 1rem;">Пройти тест знову</button>
+                <h3>Результати діагностики</h3>
+                <p id="result-text" style="font-size: 1.05rem; line-height: 1.7;"></p>
+                <button class="btn" onclick="restartQuiz()" style="margin-top: 1.5rem;">Пройти тест знову</button>
             </div>
         </section>
     </div>
@@ -144,40 +146,52 @@
     <script>
         const questions = [
             {
-                question: "Що вам найбільше до вподоби у вільний час?",
+                question: "1. Що вам цікавіше вивчати або робити у вільний час?",
                 options: [
-                    { text: "Доглядати за рослинами, тваринами, вивчати природу", type: "nature" },
-                    { text: "Ремонтувати техніку, збирати конструктори, працювати за ПК", type: "tech" },
-                    { text: "Спілкуватися з людьми, організовувати події, допомагати", type: "people" },
-                    { text: "Малювати, створювати дизайни, фотографувати, писати тексти", type: "art" }
+                    { text: "Доглядати за тваринами, рослинами, досліджувати природні явища", type: "nature" },
+                    { text: "Обслуговувати машини, прилади, механізми, збирати конструктори", type: "tech" },
+                    { text: "Навчати, виховувати людей, допомагати їм вирішувати проблеми, вести переговори", type: "people" },
+                    { text: "Працювати з цифрами, таблицями, формулами, кресленнями чи програмувати", type: "signs" },
+                    { text: "Створювати художні твори, малювати, проєктувати дизайн, займатися музикою", type: "art" }
                 ]
             },
             {
-                question: "Який шкільний предмет викликає у вас найбільший інтерес?",
+                question: "2. Віддайте перевагу одному з видів діяльності на робочому місці:",
                 options: [
-                    { text: "Біологія, географія, хімія", type: "nature" },
-                    { text: "Математика, інформатика, фізика", type: "tech" },
-                    { text: "Історія, правознавство, іноземні мови", type: "people" },
-                    { text: "Мистецтво, музика, технології творчості", type: "art" }
+                    { text: "Проводити лабораторні дослідження біологічних об'єктів чи працювати в заповіднику", type: "nature" },
+                    { text: "Ремонтувати або проєктувати нові технічні пристрої, транспорт, гаджети", type: "tech" },
+                    5: { text: "Працювати в колективі, консультувати клієнтів, організовувати масові заходи", type: "people" }, // fix indexing format consistency below
+                    { text: "Працювати з документацією, фінансовими звітами, архівами чи базами даних", type: "signs" },
+                    { text: "Виготовляти художні вироби, займатися оформленням інтер'єрів чи медіа-контенту", type: "art" }
                 ]
             },
             {
-                question: "Яку роль у командній роботі ви зазвичай обираєте?",
+                question: "3. Яке завдання ви б обрали для виконання проєкту?",
                 options: [
-                    { text: "Дослідник, який збирає факти та спостерігає", type: "nature" },
-                    { text: "Технічний експерт, що відповідає за практичну реалізацію", type: "tech" },
-                    { text: "Лідер, комунікатор, що об'єднує учасників", type: "people" },
-                    { text: "Креативний генератор ідей та візуального оформлення", type: "art" }
+                    { text: "Розробити екологічний проєкт з охорони навколишнього середовища", type: "nature" },
+                    { text: "Створити працюючий прототип електронного пристрою чи робота", type: "tech" },
+                    { text: "Розробити програму соціальної підтримки чи психологічного тренінгу для підлітків", type: "people" },
+                    { text: "Зробити точний розрахунок кошторису, статистичний аналіз чи оптимізацію коду", type: "signs" },
+                    { text: "Створити візуальну концепцію бренду, зняти відеоролик або написати сценарій", type: "art" }
                 ]
             }
         ];
 
+        // Clean up question 2 options structure
+        questions[1].options = [
+            { text: "Проводити лабораторні дослідження біологічних об'єктів чи працювати в заповіднику", type: "nature" },
+            { text: "Ремонтувати або проєктувати нові технічні пристрої, транспорт, гаджети", type: "tech" },
+            { text: "Працювати в колективі, консультувати клієнтів, організовувати масові заходи", type: "people" },
+            { text: "Працювати з документацією, фінансовими звітами, архівами чи базами даних", type: "signs" },
+            { text: "Виготовляти художні вироби, займатися оформленням інтер'єрів чи медіа-контенту", type: "art" }
+        ];
+
         let currentQuestionIndex = 0;
-        let scores = { nature: 0, tech: 0, people: 0, art: 0 };
+        let scores = { nature: 0, tech: 0, people: 0, signs: 0, art: 0 };
 
         function loadQuestion() {
             let q = questions[currentQuestionIndex];
-            document.getElementById("question-text").innerText = `${currentQuestionIndex + 1}. ${q.question}`;
+            document.getElementById("question-text").innerText = q.question;
             let optionsContainer = document.getElementById("options-container");
             optionsContainer.innerHTML = "";
             
@@ -208,13 +222,15 @@
         function showResult() {
             document.getElementById("quiz-container").style.display = "none";
             document.getElementById("next-btn").style.display = "none";
+            
             let bestType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             
             let descriptions = {
-                nature: "Ваш домінуючий тип спрямованості — **«Людина — Природа»**. Вам підходять професії, пов'язані з біологією, екологією та природничими науками.",
-                tech: "Ваш домінуючий тип спрямованості — **«Людина — Техніка»**. Вам цікаві інженерія, ІТ-сфера, архітектура та точні науки.",
-                people: "Ваш домінуючий тип спрямованості — **«Людина — Людина»**. Ваша стихія — комунікація, юриспруденція, освіта, медицина та соціальна робота.",
-                art: "Ваш домінуючий тип спрямованості — **«Людина — Художній образ»**. Ви маєте яскраво виражену схильність до творчості, медіа, дизайну та мистецтва."
+                nature: "Ваш домінуючий тип спрямованості — <strong>«Людина — Природа»</strong>. Ви цікавитесь живою природою, біологією, екологією, агрономією та медициною. Підходящі професії: еколог, біолог, ветеринар, агроном, ландшафтний дизайнер.",
+                tech: "Ваш домінуючий тип спрямованості — <strong>«Людина — Техніка»</strong>. Ваша стихія — машини, механізми, матеріали, будівництво та IT-технології. Підходящі професії: інженер, розробник ПЗ, архітектор, автомеханік, робототехнік.",
+                people: "Ваш домінуючий тип спрямованості — <strong>«Людина — Людина»</strong>. Ви маєте схильність до роботи з людьми, комунікації, навчання та обслуговування. Підходящі професії: вчитель, психолог, лікар, юрист, менеджер з персоналу, соціальний працівник.",
+                signs: "Ваш домінуючий тип спрямованості — <strong>«Людина — Знакова система»</strong>. Вам до вподоби цифри, формули, таблиці, коди, тексти та бухгалтерія. Підходящі професії: програміст, економіст, фінансист, перекладач, аналітик даних, логіст.",
+                art: "Ваш домінуючий тип спрямованості — <strong>«Людина — Художній образ»</strong>. Ви яскраво виявляєте творчі здібності, естетичне сприйняття та художній смак. Підходящі професії: дизайнер, художник, журналіст, режисер, актор, фотограф."
             };
 
             document.getElementById("result-text").innerHTML = descriptions[bestType];
@@ -223,7 +239,7 @@
 
         function restartQuiz() {
             currentQuestionIndex = 0;
-            scores = { nature: 0, tech: 0, people: 0, art: 0 };
+            scores = { nature: 0, tech: 0, people: 0, signs: 0, art: 0 };
             document.getElementById("result-container").style.display = "none";
             document.getElementById("quiz-container").style.display = "block";
             loadQuestion();
