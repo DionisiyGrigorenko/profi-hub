@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillUp | Твій кар'єрний навігатор</title>
-    <!-- FontAwesome та Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,43 +17,24 @@
             --text-muted: #64748b;
             --border-radius: 16px;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; line-height: 1.6; }
         nav {
             background: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.25rem;
             padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
         }
-        nav a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: color 0.2s;
-        }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: color 0.2s; font-size: 0.95rem; }
         nav a:hover, nav a.active { color: var(--primary); }
 
-        header {
-            text-align: center;
-            padding: 3.5rem 1rem 2rem 1rem;
-        }
+        header { text-align: center; padding: 3rem 1rem 1.5rem 1rem; }
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
@@ -63,18 +43,9 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
-        header p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-        }
+        header p { font-size: 1.1rem; color: var(--text-muted); }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto 3rem auto;
-            padding: 0 1rem;
-            flex: 1;
-            width: 100%;
-        }
+        .container { max-width: 960px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
 
         .hero-card {
             background: var(--card-bg);
@@ -87,90 +58,32 @@
             margin-bottom: 2rem;
         }
         .hero-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+            width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;
             box-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
-        .hero-card h2 {
-            font-size: 1.75rem;
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-        .hero-card p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-        }
+        .hero-card h2 { font-size: 1.75rem; color: var(--text-main); margin-bottom: 1rem; font-weight: 800; }
+        .hero-card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
 
         .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--primary), #6366F1);
-            color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.05rem;
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
-            transition: transform 0.1s, opacity 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary), #6366F1);
+            color: white; padding: 0.9rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 700;
+            font-size: 1.05rem; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25); transition: transform 0.1s;
         }
         .btn-primary:active { transform: scale(0.98); }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .feature-box {
-            background: #ffffff;
-            border: 1px solid #E2E8F0;
-            border-radius: var(--border-radius);
-            padding: 1.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: #ffffff; border: 1px solid #E2E8F0; border-radius: var(--border-radius); padding: 1.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: transform 0.2s;
         }
-        .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.06);
-        }
-        .feature-box i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .feature-box h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-        .feature-box p {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-            margin-bottom: 1.25rem;
-        }
-        .feature-box a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
+        .feature-box:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.06); }
+        .feature-box i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .feature-box h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .feature-box p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .feature-box a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
         .feature-box a:hover { text-decoration: underline; }
 
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background: #ffffff;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0;
-            margin-top: auto;
-        }
+        footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
     </style>
 </head>
 <body>
@@ -179,6 +92,8 @@
         <a href="index.html" class="active">Головна</a>
         <a href="quest.html">Profi-Quest</a>
         <a href="test.html">Експрес-тест</a>
+        <a href="future-jobs.html">Професії майбутнього</a>
+        <a href="parents.html">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
     </nav>
 
@@ -188,11 +103,10 @@
     </header>
 
     <div class="container">
-        
         <div class="hero-card">
             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" alt="Підлітки обирають професію">
             <h2>Обери своє майбутнє свідомо</h2>
-            <p>Цей інтерактивний простір створений для учнів 8–11 класів. Проходь захопливі квести, тестуйся за класичними методиками та дізнавайся, які скіли потрібні для топ-професій сьогодення.</p>
+            <p>Інтерактивний простір для учнів 8–11 класів. Проходь захопливі квести, тестуйся за класичними методиками та дізнавайся про топ-професії майбутнього.</p>
             <a href="quest.html" class="btn-primary"><i class="fa-solid fa-compass"></i> Почати Profi-Quest</a>
         </div>
 
@@ -200,25 +114,31 @@
             <div class="feature-box">
                 <i class="fa-solid fa-gamepad"></i>
                 <h3>Profi-Quest</h3>
-                <p>Динамічний ігровий симулятор свайпів у стилі Tinder для швидкого визначення твоїх інтересів.</p>
+                <p>Динамічний ігровий тренажер у стилі свайп-карток для визначення твоїх інтересів.</p>
                 <a href="quest.html">Пройти квест ➔</a>
             </div>
 
             <div class="feature-box">
                 <i class="fa-solid fa-list-check"></i>
                 <h3>Експрес-тест ДДО</h3>
-                <p>Класична методика Є.О. Клімова для визначення твого типу взаємодії з професійним середовищем.</p>
+                <p>Класична методика Є.О. Клімова для визначення типів професійної спрямованості.</p>
                 <a href="test.html">Пройти тест ➔</a>
             </div>
 
             <div class="feature-box">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h3>Корисні ресурси</h3>
-                <p>Офіційні платформи Дія.Освіта, служби зайнятості та портали для вступу до закладів освіти.</p>
-                <a href="resources.html">Переглянути ➔</a>
+                <i class="fa-solid fa-rocket"></i>
+                <h3>Професії майбутнього</h3>
+                <p>Інтерактивний каталоґ затребуваних та перспективних фахів у галузях IT, AI та екології.</p>
+                <a href="future-jobs.html">Переглянути ➔</a>
+            </div>
+
+            <div class="feature-box">
+                <i class="fa-solid fa-users-between-lines"></i>
+                <h3>Батьківський навігатор</h3>
+                <p>Практичні поради від психологів та чеклисти для батьків щодо підтримки дитини.</p>
+                <a href="parents.html">Читати поради ➔</a>
             </div>
         </div>
-
     </div>
 
     <footer>
