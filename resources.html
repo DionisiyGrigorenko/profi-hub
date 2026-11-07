@@ -233,7 +233,7 @@
         <!-- Блок рефлексії -->
         <section class="card">
             <h2>Рефлексія та зворотний зв'язок</h2>
-            <p>Заповніть форму, щоб відправити свій відгук до бази даних:</p>
+            <p>Заповніть форму, щоб відправити свій відгук:</p>
             
             <form class="feedback-form" id="feedbackForm">
                 <div class="form-group">
@@ -282,12 +282,6 @@
                         <td>5/5</td>
                         <td>Чітко визначило профіль "Людина — Знакова система".</td>
                     </tr>
-                    <tr>
-                        <td>07.11.2026</td>
-                        <td>Андрій</td>
-                        <td>4/5</td>
-                        <td>Гарна платформа, чекаю нових кейсів у Profi-Quest.</td>
-                    </tr>
                 </tbody>
             </table>
         </section>
@@ -298,27 +292,56 @@
     </footer>
 
     <script>
+        // Посилання на розгорнутий вебдодаток Google Apps Script
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYsST0NBYYUoenroV1rPzW-AoIs9nvP4hZvL1sn1yw0E-HZvC7Vw5KWvnJpUWxIeYMOw/exec";
+
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('userName').value;
-            const rating = document.getElementById('userRating').value;
-            const feedback = document.getElementById('userFeedback').value;
-            const today = new Date().toLocaleDateString('uk-UA');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Відправляється...";
 
-            // Додавання нового рядка в таблицю на сторінці
-            const tbody = document.getElementById('reviewsTableBody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${today}</td>
-                <td>${name}</td>
-                <td>${rating}/5</td>
-                <td>${feedback}</td>
-            `;
-            tbody.insertBefore(newRow, tbody.firstChild);
+            const formData = {
+                name: document.getElementById('userName').value,
+                rating: document.getElementById('userRating').value + "/5",
+                feedback: document.getElementById('userFeedback').value
+            };
 
-            alert('Дякуємо! Ваш відгук успішно збережено.');
-            this.reset();
+            // Відправка даних у Google Таблицю
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                alert('Дякуємо! Ваш відгук успішно записано в Google Таблицю.');
+                
+                // Додаємо новий рядок на екран
+                const today = new Date().toLocaleDateString('uk-UA');
+                const tbody = document.getElementById('reviewsTableBody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${today}</td>
+                    <td>${formData.name}</td>
+                    <td>${formData.rating}</td>
+                    <td>${formData.feedback}</td>
+                `;
+                tbody.insertBefore(newRow, tbody.firstChild);
+
+                this.reset();
+            })
+            .catch(error => {
+                console.error('Помилка:', error);
+                alert('Сталася помилка при відправці. Спробуйте ще раз.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Записати відгук у таблицю";
+            });
         });
     </script>
 </body>
