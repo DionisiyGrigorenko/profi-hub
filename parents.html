@@ -34,15 +34,24 @@
         .container { max-width: 900px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
 
         .advice-card {
-            background: var(--card-bg); border-radius: var(--border-radius); border: 1px solid #E2E8F0;
+            background: var(--card-bg); border-radius: var(--border-radius); border: 1.5px solid #E2E8F0;
             padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
-        .advice-card h3 { color: var(--primary); font-size: 1.25rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
+        .advice-card h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
         .advice-card p { color: #475569; font-size: 0.98rem; margin-bottom: 1rem; }
 
+        /* Оформлена цитата психолога */
+        .quote-box {
+            background: #EEF2FF; border-left: 4px solid var(--primary); padding: 1.25rem; border-radius: 0 12px 12px 0;
+            margin: 1.25rem 0; font-style: italic; color: #334155; font-size: 0.96rem;
+        }
+        .quote-author {
+            display: block; text-align: right; font-style: normal; font-weight: 700; font-size: 0.85rem; color: var(--primary-dark); margin-top: 0.5rem;
+        }
+
         .checklist { list-style: none; margin-top: 1rem; }
-        .checklist li { display: flex; align-items: center; gap: 10px; font-weight: 600; margin-bottom: 0.6rem; color: #334155; }
-        .checklist i { color: var(--teal); }
+        .checklist li { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; margin-bottom: 0.75rem; color: #334155; font-size: 0.95rem; }
+        .checklist i { color: var(--teal); margin-top: 4px; }
 
         footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
     </style>
@@ -60,28 +69,40 @@
 
     <header>
         <h1>Батьківський навігатор</h1>
-        <p>Як підтримати дитину у свідомому виборі професії без тиску та тривог</p>
+        <p>Як допомогти підлітку зробити свідомий вибір життєвого шляху без тиску</p>
     </header>
 
     <div class="container">
+        
         <div class="advice-card">
-            <h3><i class="fa-solid fa-heart"></i> 1. Слухати та спостерігати</h3>
-            <p>Не нав'язуйте нереалізовані власні мрії. Спостерігайте, до чого у дитини є щирий інтерес у вільний час — створення контенту, конструювання, спілкування чи аналіз даних.</p>
+            <h3><i class="fa-solid fa-heart-pulse"></i> 1. Емоційна підтримка замість тиску</h3>
+            <p>Період підготовки до НМТ та вибору професії — це час високого стресу для старшокласників. Ваше головне завдання — бути надійним тилом, а не суддею.</p>
+            
+            <div class="quote-box">
+                «Найкраще, що батьки можуть зробити для своєї дитини — це дозволити їй бути собою, а не втіленням їхніх нереалізованих дитячих амбіцій.»
+                <span class="quote-author">— Карл Роджерс, видатний психотерапевт</span>
+            </div>
         </div>
 
         <div class="advice-card">
-            <h3><i class="fa-solid fa-triangle-exclamation"></i> 2. 5 поширених помилок батьків</h3>
-            <p>Обирати фах «за компанію з друзями», орієнтуватися лише на престижність назви факультету або тиснути питанням «Ким ти будеш працювати все життя?». Сьогодення вимагає гнучкості та готовності вчитися постійно.</p>
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> 2. Типові пастки у профорієнтації</h3>
+            <p>Уникайте крайнощів: вибору «за компанію з найкращим другом» або вступу на «наймоднішу» спеціальність сьогодні, яка за 5 років може втратити актуальність. Допоможіть дитині звернути увагу на її стійкі інтереси та здібності.</p>
+            
+            <div class="quote-box">
+                «Обирайте роботу до душі, і вам не доведеться працювати жодного дня в своєму житті.»
+                <span class="quote-author">— Конфуцій</span>
+            </div>
         </div>
 
         <div class="advice-card">
-            <h3><i class="fa-solid fa-list-check"></i> Чеклист готовності дитини до вибору</h3>
+            <h3><i class="fa-solid fa-list-check"></i> Покроковий чеклист для батьків</h3>
             <ul class="checklist">
-                <li><i class="fa-solid fa-circle-check"></i> Пройдено діагностику інтересів (наприклад, Profi-Quest та тест ДДО)</li>
-                <li><i class="fa-solid fa-circle-check"></i> Визначено пріоритетні предмети для складання НМТ</li>
-                <li><i class="fa-solid fa-circle-check"></i> Проведено розмову про реальні робочі обов'язки у бажаній сфері</li>
+                <li><i class="fa-solid fa-circle-check"></i> Запропонуйте дитині пройти інтерактивні тести (наприклад, наш Profi-Quest та тест ДДО), щоб обговорити результати без критики.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Досліджуйте разом ринок праці: перегляньте вакансії, подивіться інтерв'ю з фахівцями обраної галузі.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Пам'ятайте про право на помилку: перша професія не є вироком на все життя, у сучасному світі люди часто змінюють кар'єрні вектори.</li>
             </ul>
         </div>
+
     </div>
 
     <footer>
