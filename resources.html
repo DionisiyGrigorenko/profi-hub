@@ -37,19 +37,22 @@
         .card h2 { color: var(--primary-dark); font-size: 1.5rem; margin-bottom: 1rem; }
 
         .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
-        .resource-item { background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; }
+        .resource-item { background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s; }
+        .resource-item:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.05); }
         
         .resource-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem; }
         .resource-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; padding: 4px; border: 1px solid #CBD5E1; flex-shrink: 0; }
         .resource-item h4 { color: var(--primary-dark); font-size: 1.1rem; margin: 0; }
         .resource-item p { font-size: 0.88rem; color: #64748b; margin-bottom: 1.25rem; }
-        .resource-item a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+        .resource-item a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 4px; }
+        .resource-item a:hover { text-decoration: underline; }
 
         .feedback-form { background: #F8FAFC; padding: 1.75rem; border-radius: 12px; border: 1.5px solid #E2E8F0; display: flex; flex-direction: column; gap: 1rem; }
         .form-group label { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 0.4rem; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.95rem; }
         
         .btn { background: var(--primary); color: #FFF; padding: 0.8rem; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; text-align: center; }
+        .btn:hover { background: var(--primary-dark); }
 
         footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
     </style>
@@ -67,20 +70,20 @@
 
     <header>
         <h1>Корисні ресурси та рефлексія</h1>
-        <p>Офіційні державні платформи, освітні інструменти та зворотний зв'язок</p>
+        <p>Перевірені державні платформи, освітні інструменти та зворотний зв'язок</p>
     </header>
 
     <div class="container">
         <section class="card">
             <h2>Офіційні освітні та профорієнтаційні платформи</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Перевірені ресурси для побудови кар'єрної траєкторії:</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Офіційні державні ресурси для побудови кар'єри та підготовки до вступу:</p>
 
             <div class="resources-grid">
                 <!-- Дія.Освіта -->
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://osvita.diia.gov.ua/images/favicons/favicon-32x32.png" alt="Дія.Освіта" class="resource-logo">
+                            <img src="https://www.google.com/s2/favicons?domain=osvita.diia.gov.ua&sz=128" alt="Дія.Освіта" class="resource-logo">
                             <h4>Дія.Освіта</h4>
                         </div>
                         <p>Національна платформа з профорієнтації, симуляторів професій та освітніх серіалів.</p>
@@ -92,7 +95,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://www.dcz.gov.ua/themes/custom/dcz/favicon.ico" alt="Служба зайнятості" class="resource-logo">
+                            <img src="https://www.google.com/s2/favicons?domain=dcz.gov.ua&sz=128" alt="Служба зайнятості" class="resource-logo">
                             <h4>Служба зайнятості</h4>
                         </div>
                         <p>Платформа для молоді з підбору вакансій, кар'єрного консультування та ваучерів на навчання.</p>
@@ -104,7 +107,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://vstup.edbo.gov.ua/assets/img/favicons/favicon.ico" alt="ЄДЕБО" class="resource-logo">
+                            <img src="https://www.google.com/s2/favicons?domain=vstup.edbo.gov.ua&sz=128" alt="ЄДЕБО" class="resource-logo">
                             <h4>ЄДЕБО / Вступ</h4>
                         </div>
                         <p>Офіційний державний портал про заклади вищої та фахової передвищої освіти України.</p>
@@ -116,7 +119,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://mon.gov.ua/favicon.ico" alt="МОН України" class="resource-logo">
+                            <img src="https://www.google.com/s2/favicons?domain=mon.gov.ua&sz=128" alt="МОН України" class="resource-logo">
                             <h4>МОН України</h4>
                         </div>
                         <p>Офіційний сайт Міністерства освіти і науки України з новинами щодо вступу та реформ.</p>
@@ -128,10 +131,10 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://testportal.gov.ua/favicon.ico" alt="УЦОЯО" class="resource-logo">
+                            <img src="https://www.google.com/s2/favicons?domain=testportal.gov.ua&sz=128" alt="УЦОЯО" class="resource-logo">
                             <h4>УЦОЯО</h4>
                         </div>
-                        <p>Український центр оцінювання якості освіти — вся інформація про підготовку до НМТ.</p>
+                        <p>Український центр оцінювання якості освіти — вся інформація про підготовку та проведення НМТ.</p>
                     </div>
                     <a href="https://testportal.gov.ua/" target="_blank">Перейти на портал ➔</a>
                 </div>
