@@ -13,19 +13,66 @@
             --teal: #0d9488;
             --bg-gradient: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 40%, #F3E8FF 100%);
             --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: #E2E8F0;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --border-radius: 16px;
+            --nav-bg: #ffffff;
+            --box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        [data-theme="dark"] {
+            --primary: #818CF8;
+            --primary-dark: #6366F1;
+            --teal: #2DD4BF;
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            --card-bg: rgba(30, 41, 59, 0.88);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --nav-bg: #1E293B;
+            --box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
         body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; line-height: 1.6; }
         
         nav {
-            background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center;
-            gap: 1.25rem; padding: 1rem; position: sticky; top: 0; z-index: 100; flex-wrap: wrap;
+            background: var(--nav-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
         }
-        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
-        nav a:hover, nav a.active { color: var(--primary); }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
+        nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
+
+        /* Кнопка перемикання теми */
+        .theme-toggle {
+            background: none;
+            border: 1.5px solid var(--text-muted);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .theme-toggle:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            transform: scale(1.05);
+        }
 
         header { text-align: center; padding: 2.5rem 1rem 1.5rem 1rem; }
         header h1 { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 0.4rem; }
@@ -35,40 +82,40 @@
 
         .filters { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
         .filter-btn {
-            background: #ffffff; border: 1.5px solid #CBD5E1; padding: 0.6rem 1.25rem; border-radius: 20px;
+            background: var(--card-bg); border: 1.5px solid var(--card-border); padding: 0.6rem 1.25rem; border-radius: 20px;
             font-weight: 700; font-size: 0.9rem; cursor: pointer; color: var(--text-main); transition: all 0.2s;
         }
-        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .filter-btn.active, .filter-btn:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
 
         .jobs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; }
         .job-card {
-            background: var(--card-bg); border-radius: var(--border-radius); border: 1.5px solid #E2E8F0;
+            background: var(--card-bg); border-radius: 16px; border: 1.5px solid var(--card-border);
             padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--box-shadow); transition: transform 0.2s, box-shadow 0.2s;
         }
-        .job-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(0,0,0,0.06); }
+        .job-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
         .job-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
         .job-icon {
-            width: 48px; height: 48px; border-radius: 12px; background: #EEF2FF; color: var(--primary);
+            width: 48px; height: 48px; border-radius: 12px; background: rgba(13, 148, 136, 0.15); color: var(--teal);
             display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
         }
-        .job-title { font-size: 1.15rem; font-weight: 800; color: #0F172A; }
+        .job-title { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
         .job-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1rem; }
         
         .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
-        .tag { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: #F1F5F9; color: #475569; }
+        .tag { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(100, 100, 100, 0.1); color: var(--text-muted); border: 1px solid var(--card-border); }
 
         .btn-test {
-            display: block; text-align: center; background: #F8FAFC; border: 1.5px solid #CBD5E1;
-            color: var(--primary); font-weight: 700; padding: 0.65rem; border-radius: 10px; text-decoration: none;
-            font-size: 0.9rem; transition: background 0.2s;
+            display: block; text-align: center; background: var(--card-bg); border: 1.5px solid var(--card-border);
+            color: var(--teal); font-weight: 700; padding: 0.65rem; border-radius: 10px; text-decoration: none;
+            font-size: 0.9rem; transition: background 0.2s, color 0.2s;
         }
-        .btn-test:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .btn-test:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
 
-        footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
+        footer { text-align: center; padding: 1.5rem; background: var(--nav-bg); color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(100,100,100,0.1); margin-top: auto; }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
     <nav>
         <a href="index.html">Головна</a>
@@ -77,6 +124,9 @@
         <a href="future-jobs.html" class="active">Професії майбутнього</a>
         <a href="parents.html">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
+        <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
     </nav>
 
     <header>
@@ -113,7 +163,7 @@
             <div class="job-card" data-cat="eco">
                 <div>
                     <div class="job-header">
-                        <div class="job-icon" style="background:#ECFDF5; color:#0d9488;"><i class="fa-solid fa-solar-panel"></i></div>
+                        <div class="job-icon"><i class="fa-solid fa-solar-panel"></i></div>
                         <div class="job-title">Архітектор відновлюваної енергетики</div>
                     </div>
                     <div class="job-desc">Розробка та обслуговування сонячних, вітрових і водневих комплексів, енергоефективне будівництво.</div>
@@ -128,7 +178,7 @@
             <div class="job-card" data-cat="bio">
                 <div>
                     <div class="job-header">
-                        <div class="job-icon" style="background:#FEF2F2; color:#EF4444;"><i class="fa-solid fa-dna"></i></div>
+                        <div class="job-icon"><i class="fa-solid fa-dna"></i></div>
                         <div class="job-title">Біоінженер та генний аналітик</div>
                     </div>
                     <div class="job-desc">Створення штучних органів, аналіз ДНК, розробка біофармацевтичних препаратів нового покоління.</div>
@@ -158,7 +208,7 @@
             <div class="job-card" data-cat="creative">
                 <div>
                     <div class="job-header">
-                        <div class="job-icon" style="background:#FDF4FF; color:#9333EA;"><i class="fa-solid fa-vr-cardboard"></i></div>
+                        <div class="job-icon"><i class="fa-solid fa-vr-cardboard"></i></div>
                         <div class="job-title">Дизайнер віртуальних світів (VR/AR)</div>
                     </div>
                     <div class="job-desc">Моделювання 3D-середовищ, інтерактивних симуляцій та інтерфейсів для віртуальної реальності.</div>
@@ -173,7 +223,7 @@
             <div class="job-card" data-cat="it">
                 <div>
                     <div class="job-header">
-                        <div class="job-icon" style="background:#FFFBEB; color:#D97706;"><i class="fa-solid fa-robot"></i></div>
+                        <div class="job-icon"><i class="fa-solid fa-robot"></i></div>
                         <div class="job-title">Оператор робототехнічних систем</div>
                     </div>
                     <div class="job-desc">Програмування, тестовий запуск і технічний супровід автономних роботів та дронів у логістиці і агросекторі.</div>
@@ -191,6 +241,18 @@
     </footer>
 
     <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+
         function filterJobs(cat) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
