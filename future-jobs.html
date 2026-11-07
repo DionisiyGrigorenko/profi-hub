@@ -31,7 +31,7 @@
         header h1 { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 0.4rem; }
         header p { color: var(--text-muted); font-size: 1.05rem; }
 
-        .container { max-width: 960px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
+        .container { max-width: 1000px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
 
         .filters { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
         .filter-btn {
@@ -40,9 +40,9 @@
         }
         .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; }
         .job-card {
-            background: var(--card-bg); border-radius: var(--border-radius); border: 1px solid #E2E8F0;
+            background: var(--card-bg); border-radius: var(--border-radius); border: 1.5px solid #E2E8F0;
             padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -81,76 +81,104 @@
 
     <header>
         <h1>Професії майбутнього</h1>
-        <p>Каталог топ-фахів, які визначатимуть ринок праці найближчі 10 років</p>
+        <p>Каталог топ-спеціальностей, які формуватимуть ринок праці в Україні та світі</p>
     </header>
 
     <div class="container">
         <div class="filters">
             <button class="filter-btn active" onclick="filterJobs('all')">Усі напрями</button>
-            <button class="filter-btn" onclick="filterJobs('it')">IT & ШІ</button>
+            <button class="filter-btn" onclick="filterJobs('it')">IT, ШІ & Дані</button>
             <button class="filter-btn" onclick="filterJobs('eco')">Екологія & Енергія</button>
             <button class="filter-btn" onclick="filterJobs('bio')">Медицина & Біо</button>
+            <button class="filter-btn" onclick="filterJobs('creative')">Креатив & Медіа</button>
         </div>
 
         <div class="jobs-grid" id="jobsGrid">
+            <!-- 1 -->
             <div class="job-card" data-cat="it">
                 <div>
                     <div class="job-header">
                         <div class="job-icon"><i class="fa-solid fa-brain"></i></div>
                         <div class="job-title">Інженер штучного інтелекту</div>
                     </div>
-                    <div class="job-desc">Розробка моделей машинного навчання, оптимізація алгоритмів ШІ та впровадження смарт-систем.</div>
+                    <div class="job-desc">Створення нейромереж, тренування моделей машинного навчання та інтеграція ШІ в бізнес-процеси.</div>
                     <div class="tag-list">
-                        <span class="tag">Математика</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">НМТ: Математика / Англійська</span>
+                        <span class="tag">Python</span> <span class="tag">Математика</span> <span class="tag">НМТ: Математика</span>
                     </div>
                 </div>
                 <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
             </div>
 
+            <!-- 2 -->
             <div class="job-card" data-cat="eco">
                 <div>
                     <div class="job-header">
                         <div class="job-icon" style="background:#ECFDF5; color:#0d9488;"><i class="fa-solid fa-leaf"></i></div>
-                        <div class="job-title">Спеціаліст із відновлюваної енергії</div>
+                        <div class="job-title">Енергоаудитор та екотехнолог</div>
                     </div>
-                    <div class="job-desc">Проєктування сонячних, вітрових та водних енергетичних систем для екологічного майбутнього.</div>
+                    <div class="job-desc">Проєктування та оптимізація систем відновлюваної енергії, переробка відходів, екологічний контроль будівель.</div>
                     <div class="tag-list">
-                        <span class="tag">Фізика</span>
-                        <span class="tag">Екологія</span>
-                        <span class="tag">НМТ: Фізика / Хімія</span>
+                        <span class="tag">Фізика</span> <span class="tag">Хімія</span> <span class="tag">НМТ: Фізика</span>
                     </div>
                 </div>
                 <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
             </div>
 
+            <!-- 3 -->
             <div class="job-card" data-cat="bio">
                 <div>
                     <div class="job-header">
                         <div class="job-icon" style="background:#FEF2F2; color:#EF4444;"><i class="fa-solid fa-dna"></i></div>
                         <div class="job-title">Біоінженер та генний аналітик</div>
                     </div>
-                    <div class="job-desc">Створення нових ліків, розшифровка ДНК та розробка біотехнологічних матеріалів.</div>
+                    <div class="job-desc">Розробка біопротезів, створення інноваційних ліків, дослідження геному та клітинні технології.</div>
                     <div class="tag-list">
-                        <span class="tag">Біологія</span>
-                        <span class="tag">Хімія</span>
-                        <span class="tag">НМТ: Біологія / Математика</span>
+                        <span class="tag">Біологія</span> <span class="tag">Аналітика</span> <span class="tag">НМТ: Біологія</span>
                     </div>
                 </div>
                 <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
             </div>
 
+            <!-- 4 -->
             <div class="job-card" data-cat="it">
                 <div>
                     <div class="job-header">
                         <div class="job-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <div class="job-title">Аналітик кібербезпеки</div>
+                        <div class="job-title">Архітектор кібербезпеки</div>
                     </div>
-                    <div class="job-desc">Захист цифрової інфраструктури, виявлення хакерських загроз та збереження персональних даних.</div>
+                    <div class="job-desc">Захист державних та корпоративних баз даних від хакерських атак, побудова шифрувальних систем.</div>
                     <div class="tag-list">
-                        <span class="tag">Комп'ютерні мережі</span>
-                        <span class="tag">Криптографія</span>
+                        <span class="tag">Мережі</span> <span class="tag">Криптографія</span> <span class="tag">НМТ: Англійська</span>
+                    </div>
+                </div>
+                <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
+            </div>
+
+            <!-- 5 -->
+            <div class="job-card" data-cat="creative">
+                <div>
+                    <div class="job-header">
+                        <div class="job-icon" style="background:#FDF4FF; color:#9333EA;"><i class="fa-solid fa-vr-cardboard"></i></div>
+                        <div class="job-title">Дизайнер віртуальних світів (VR/AR)</div>
+                    </div>
+                    <div class="job-desc">Розробка об'єктів, локацій, інтерфейсів та повноцінних симуляцій для віртуальної і доповненої реальності.</div>
+                    <div class="tag-list">
+                        <span class="tag">3D-моделювання</span> <span class="tag">Figma/Unity</span> <span class="tag">Креатив</span>
+                    </div>
+                </div>
+                <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
+            </div>
+
+            <!-- 6 -->
+            <div class="job-card" data-cat="it">
+                <div>
+                    <div class="job-header">
+                        <div class="job-icon" style="background:#FFFBEB; color:#D97706;"><i class="fa-solid fa-robot"></i></div>
+                        <div class="job-title">Оператор та програміст дронів</div>
+                    </div>
+                    <div class="job-desc">Керування автономними безпілотними апаратами у сферах логістики, агропромисловості, рятувальних операцій.</div>
+                    <div class="tag-list">
+                        <span class="tag">Робототехніка</span> <span class="tag">Фізика</span> <span class="tag">Алгоритми</span>
                     </div>
                 </div>
                 <a href="quest.html" class="btn-test">Перевірити схильність ➔</a>
