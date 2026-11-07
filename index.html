@@ -8,6 +8,7 @@
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
+            --accent: #0d9488;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-color: #1e293b;
@@ -27,18 +28,18 @@
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 2.5rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
         }
-        header h1 { margin: 0; font-size: 2.3rem; }
-        header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
+        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: -0.5px; }
+        header p { margin-top: 0.75rem; font-size: 1.2rem; opacity: 0.95; }
 
         nav {
             background: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 2rem;
             padding: 1rem;
             position: sticky;
             top: 0;
@@ -53,31 +54,58 @@
         nav a:hover, nav a.active { color: var(--primary); }
 
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
+            max-width: 1000px;
+            margin: 2.5rem auto;
             padding: 0 1rem;
             flex: 1;
         }
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
             margin-bottom: 2rem;
         }
-        .card h2 { color: var(--primary-dark); margin-top: 0; }
+        .card h2 { color: var(--primary-dark); margin-top: 0; font-size: 1.8rem; }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .feature-item {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .feature-item h3 { margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--primary-dark); }
+        .feature-item p { margin: 0; font-size: 0.95rem; color: #475569; }
+
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 0.85rem 2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: background 0.2s;
+            margin-top: 1.5rem;
         }
         .btn:hover { background-color: var(--primary-dark); }
         
+        .image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -93,7 +121,7 @@
 
     <header>
         <h1>Профорієнтаційний навігатор</h1>
-        <p>Комплексна цифрова платформа для учнів 8–11 класів</p>
+        <p>Сучасна цифрова платформа для самовизначення учнів 8–11 класів</p>
     </header>
 
     <nav>
@@ -104,11 +132,39 @@
     </nav>
 
     <div class="container">
+        <!-- Блок опису проєкту -->
         <section class="card">
-            <h2>Про ідею та призначення проєкту</h2>
-            <p>Свідоме професійне самовизначення є ключовим етапом у житті старшокласників. Цей веб-ресурс створено як практичний інструмент апробації профорієнтаційних заходів, що дозволяє учням самостійно досліджувати свої нахили, проходити інтерактивні тести та знайомитися з можливостями сучасного ринку праці.</p>
-            <p>Платформа поєднує гейміфікацію, психологічну діагностику та державні ініціативи в єдиному цифровому просторі.</p>
-            <a href="test.html" class="btn" style="margin-top: 1rem;">Розпочати тестування ➔</a>
+            <h2>Про концепцію та мету платформи</h2>
+            <p><strong>«Профорієнтаційний навігатор»</strong> — це інтерактивний веб-ресурс, створений для допомоги старшокласникам у процесі усвідомленого вибору майбутнього освітнього та професійного шляху. Платформа поєднує класичні психологічні методики діагностики, ігрові симуляції (гейміфікацію) та актуальні державні ресурси.</p>
+            
+            <div class="image-container">
+                <Image src="image_agent_tag_2792507619510526133" alt="Профорієнтація та кар'єрне планування молоді" caption="Цифрові інструменти професійного самовизначення" />
+            </div>
+
+            <p>У періоді ранньої юності вибір професії часто супроводжується сумнівами та браком практичного досвіду. Наш ресурс покликаний розширити уявлення учнів 8–11 класів про різноманіття сучасних професій, розвинути навички самоаналізу та знизити рівень тривожності перед майбутніми життєвими викликами.</p>
+        </section>
+
+        <!-- Блок ключових модулів -->
+        <section class="card">
+            <h2>Структура та можливості ресурсу</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>🎮 Profi-Quest</h3>
+                    <p>Інтерактивні міні-ігри та практичні кейси для занурення у специфіку різних галузей діяльності.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>📝 Експрес-тест</h3>
+                    <p>Швидка діагностика професійних схильностей за класичними критеріями для виявлення індивідуального профілю.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🌐 Корисні ресурси</h3>
+                    <p>Прямі посилання на державні платформи («Дія.Освіта», служба зайнятості) та форма рефлексії.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="test.html" class="btn">Пройти експрес-тест ➔</a>
+            </div>
         </section>
     </div>
 
