@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профорієнтаційний навігатор | Корисні ресурси</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-radius: 12px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 2.3rem; }
+        header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
+
+        nav {
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        nav a:hover, nav a.active { color: var(--primary); }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .card h2 { color: var(--primary-dark); margin-top: 0; }
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .resource-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+        .resource-item h4 { margin: 0 0 0.5rem 0; color: var(--primary); }
+        .resource-item a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .resource-item a:hover { text-decoration: underline; }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #ffffff;
+            color: #64748b;
+            font-size: 0.95rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Корисні ресурси та рефлексія</h1>
+        <p>Державні платформи, інструменти та зворотний зв'язок</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Головна</a>
+        <a href="quest.html">Profi-Quest</a>
+        <a href="test.html">Експрес-тест</a>
+        <a href="resources.html" class="active">Корисні ресурси</a>
+    </nav>
+
+    <div class="container">
+        <!-- Блок державних ресурсів -->
+        <section class="card">
+            <h2>Державні платформи з профорієнтації</h2>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <h4>Дія.Освіта</h4>
+                    <p>Профорієнтаційні тести, освітні серіали про затребувані професії.</p>
+                    <a href="https://osvita.diia.gov.ua/prof-orientation-quiz" target="_blank">Перейти на портал ➔</a>
+                </div>
+                <div class="resource-item">
+                    <h4>Державна служба зайнятості</h4>
+                    <p>Платформа для молоді з підбору кар'єрного шляху.</p>
+                    <a href="https://www.dcz.gov.ua/" target="_blank">Перейти на портал ➔</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Блок рефлексії -->
+        <section class="card">
+            <h2>Рефлексія та зворотний зв'язок</h2>
+            <p>Поділіться враженнями від використання платформи для покращення профорієнтаційної роботи:</p>
+            <div style="background: #f1f5f9; padding: 2rem; border-radius: 8px; text-align: center; color: #64748b;">
+                <p>[Тут буде вбудована Google Форма рефлексії для пункту 2.4]</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        Вихренко Ірина, Умань, 2026 рік
+    </footer>
+
+</body>
+</html>
