@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профорієнтаційний навігатор | Експрес-тест ДДО</title>
+    <title>Профорієнтаційний навігатор | Експрес-тест ДДО Клімова</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -95,6 +95,20 @@
         .options label:hover { background: #e2e8f0; border-color: var(--primary); }
         .options input { margin-right: 10px; }
         
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 8px;
+            height: 10px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -110,7 +124,7 @@
 
     <header>
         <h1>Диференційно-діагностичний опитувальник (ДДО)</h1>
-        <p>Класична методика Є.О. Клімова для визначення професійних схильностей</p>
+        <p>Класична методика Є.О. Клімова (повний варіант із 20 питань)</p>
     </header>
 
     <nav>
@@ -123,18 +137,25 @@
     <div class="container">
         <section class="card" id="test-section">
             <h2>Опитувальник схильностей</h2>
-            <p>Уявіть, що у вас є повна свобода вибору. Щo з переліченого нижче вам було б цікавіше робити в кожній із ситуацій?</p>
+            <p>У кожному питанні оберіть <strong>тільки один</strong> варіант (А або Б), який вам найбільше до вподоби:</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
             <div id="quiz-container">
                 <div class="question-box">
                     <p id="question-text" style="font-weight: 600; font-size: 1.15rem; color: var(--primary-dark);"></p>
                     <div class="options" id="options-container"></div>
                 </div>
-                <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none;">Наступне питання</button>
+                <button class="btn" id="next-btn">Наступне питання</button>
             </div>
+
             <div id="result-container" style="display:none;">
-                <h3>Результати діагностики</h3>
+                <h3>Результати діагностики (ДДО Клімова)</h3>
                 <p id="result-text" style="font-size: 1.05rem; line-height: 1.7;"></p>
-                <button class="btn" onclick="restartQuiz()" style="margin-top: 1.5rem;">Пройти тест знову</button>
+                <div id="scores-breakdown" style="margin: 1.5rem 0; background: #f8fafc; padding: 1rem; border-radius: 8px;"></div>
+                <button class="btn" id="restart-btn">Пройти тест знову</button>
             </div>
         </section>
     </div>
@@ -144,35 +165,126 @@
     </footer>
 
     <script>
+        // Повний стандартний набір з 20 питань ДДО Клімова (де кожна пара відповідає певній категорії)
         const questions = [
             {
-                question: "1. Що вам цікавіше вивчати або робити у вільний час?",
-                options: [
-                    { text: "Доглядати за тваринами, рослинами, досліджувати природні явища", type: "nature" },
-                    { text: "Обслуговувати машини, прилади, механізми, збирати конструктори", type: "tech" },
-                    { text: "Навчати, виховувати людей, допомагати їм вирішувати проблеми, вести переговори", type: "people" },
-                    { text: "Працювати з цифрами, таблицями, формулами, кресленнями чи програмувати", type: "signs" },
-                    { text: "Створювати художні твори, малювати, проєктувати дизайн, займатися музикою", type: "art" }
+                pair: [
+                    { text: "Доглядати за тваринами", type: "nature" },
+                    { text: "Обслуговувати машини, прилади, апаратуру", type: "tech" }
                 ]
             },
             {
-                question: "2. Віддайте перевагу одному з видів діяльності на робочому місці:",
-                options: [
-                    { text: "Проводити лабораторні дослідження біологічних об'єктів чи працювати в заповіднику", type: "nature" },
-                    { text: "Ремонтувати або проєктувати нові технічні пристрої, транспорт, гаджети", type: "tech" },
-                    { text: "Працювати в колективі, консультувати клієнтів, організовувати масові заходи", type: "people" },
-                    { text: "Працювати з документацією, фінансовими звітами, архівами чи базами даних", type: "signs" },
-                    { text: "Виготовляти художні вироби, займатися оформленням інтер'єрів чи медіа-контенту", type: "art" }
+                pair: [
+                    { text: "Обговорювати науково-популярні книги", type: "signs" },
+                    { text: "Обговорювати художні книги (п'єси, картини)", type: "art" }
                 ]
             },
             {
-                question: "3. Яке завдання ви б обрали для виконання проєкту?",
-                options: [
-                    { text: "Розробити екологічний проєкт з охорони навколишнього середовища", type: "nature" },
-                    { text: "Створити працюючий прототип електронного пристрою чи робота", type: "tech" },
-                    { text: "Розробити програму соціальної підтримки чи психологічного тренінгу для підлітків", type: "people" },
-                    { text: "Зробити точний розрахунок кошторису, статистичний аналіз чи оптимізацію коду", type: "signs" },
-                    { text: "Створити візуальну концепцію бренду, зняти відеоролик або написати сценарій", type: "art" }
+                pair: [
+                    { text: "Слідкувати за якістю рослинних культур", type: "nature" },
+                    { text: "Слідкувати за якістю виробів, матеріалів, приладів", type: "tech" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Виготовляти вироби (дерево, метал, тканину)", type: "art" },
+                    { text: "Креслити, копіювати карти, схеми, формули", type: "signs" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Допомагати людям у розв'язанні життєвих проблем, навчати", type: "people" },
+                    { text: "Працювати з рослинами, тваринами, доглядати за ними", type: "nature" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Проєктувати нові будівлі, споруди, машини", type: "tech" },
+                    { text: "Проектувати нові види одягу, зачіски, оформлювати інтер'єр", type: "art" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Розбиратися у схемах, таблицях, графіках, числах", type: "signs" },
+                    { text: "Спостерігати за роботою людей, аналізувати їх поведінку та взаємодію", type: "people" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Робити художні описи природи, подій, людей", type: "art" },
+                    { text: "Робити лабораторні аналізи в галузі біології, хімії, екології", type: "nature" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Ремонтувати побутові прилади, техніку, меблі", type: "tech" },
+                    { text: "Консультувати людей з різних питань, допомагати порадою", type: "people" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Вести облік грошей, розрахунки, таблиці, працювати з документами", type: "signs" },
+                    { text: "Вивчати життєдіяльність рослин і тварин у природі чи заповідниках", type: "nature" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Організовувати культурні події, екскурсії, свята", type: "people" },
+                    { text: "Створювати малюнки, плакати, займатися дизайном чи фотографією", type: "art" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Визначати причини несправностей у техніці, приладах", type: "tech" },
+                    { text: "Визначати високі показники врожайності чи продуктивності тварин", type: "nature" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Працювати з іноземними мовами, перекладати тексти, коди", type: "signs" },
+                    { text: "Проєктувати нові механізми, деталі, пристрої", type: "tech" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Проводити медичне обслуговування людей, лікувати", type: "people" },
+                    { text: "Працювати з кресленнями, схемами, картами, розрахунками", type: "signs" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Виступати на сцені, грати ролі, брати участь у творчих концертах", type: "art" },
+                    { text: "Працювати в колективі, координувати спільну діяльність людей", type: "people" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Виготовляти деталі, збирати прилади за кресленнями та схемами", type: "tech" },
+                    { text: "Опрацьовувати текстові матеріали, редагувати статті, звіти", type: "signs" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Доглядати за лісовими насадженнями, заповідними зонами", type: "nature" },
+                    { text: "Організовувати роботу колективу, керувати процесами у команді", type: "people" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Створювати витвори мистецтва, писати вірші, музику, картини", type: "art" },
+                    { text: "Проводити точні вимірювання, розрахунки, математичний аналіз", type: "signs" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Проводити екскурсії, розповідати людям цікаву інформацію", type: "people" },
+                    { text: "Вивчати будову тварин і рослин, працювати в оранжереї чи лабораторії", type: "nature" }
+                ]
+            },
+            {
+                pair: [
+                    { text: "Налаштовувати складне обладнання, комп'ютерні мережі, прилади", type: "tech" },
+                    { text: "Складати фінансові звіти, працювати з кошторисами, документами", type: "signs" }
                 ]
             }
         ];
@@ -182,22 +294,26 @@
 
         function loadQuestion() {
             let q = questions[currentQuestionIndex];
-            document.getElementById("question-text").innerText = q.question;
+            document.getElementById("question-text").innerText = `${currentQuestionIndex + 1}. Що вам більше подобається?`;
+            
+            // Оновлюємо шкалу прогресу
+            let progress = ((currentQuestionIndex) / questions.length) * 100;
+            document.getElementById("progress-fill").style.width = `${progress}%`;
+
             let optionsContainer = document.getElementById("options-container");
             optionsContainer.innerHTML = "";
             
-            q.options.forEach((opt) => {
+            q.pair.forEach((opt, idx) => {
                 let label = document.createElement("label");
-                label.innerHTML = `<input type="radio" name="option" value="${opt.type}"> ${opt.text}`;
+                label.innerHTML = `<input type="radio" name="option" value="${opt.type}" id="opt-${idx}"> ${opt.text}`;
                 optionsContainer.appendChild(label);
             });
-            document.getElementById("next-btn").style.display = "inline-block";
         }
 
         function nextQuestion() {
             let selected = document.querySelector('input[name="option"]:checked');
             if (!selected) {
-                alert("Будь ласка, оберіть один із варіантів відповіді!");
+                alert("Будь ласка, оберіть один із двох варіантів відповіді!");
                 return;
             }
             scores[selected.value]++;
@@ -213,7 +329,9 @@
         function showResult() {
             document.getElementById("quiz-container").style.display = "none";
             document.getElementById("next-btn").style.display = "none";
+            document.getElementById("progress-fill").style.width = "100%";
             
+            // Знаходимо категорію з максимальним балом
             let bestType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             
             let descriptions = {
@@ -221,10 +339,26 @@
                 tech: "Ваш домінуючий тип спрямованості — <strong>«Людина — Техніка»</strong>. Ваша стихія — машини, механізми, матеріали, будівництво та IT-технології. Підходящі професії: інженер, розробник ПЗ, архітектор, автомеханік, робототехнік.",
                 people: "Ваш домінуючий тип спрямованості — <strong>«Людина — Людина»</strong>. Ви маєте схильність до роботи з людьми, комунікації, навчання та обслуговування. Підходящі професії: вчитель, психолог, лікар, юрист, менеджер з персоналу, соціальний працівник.",
                 signs: "Ваш домінуючий тип спрямованості — <strong>«Людина — Знакова система»</strong>. Вам до вподоби цифри, формули, таблиці, коди, тексти та бухгалтерія. Підходящі професії: програміст, економіст, фінансист, перекладач, аналітик даних, логіст.",
-                art: "Ваш домінуючий тип спрямованості — <strong>«Людина — Художній образ»</strong>. Ви яскраво виявляєте творчі здібності, естетичне сприйняття та художній смак. Підходящі професії: дизайнер, художник, журналіст, режисер, актор, фотограф."
+                art: "Ваш доміynyчий тип спрямованості — <strong>«Людина — Художній образ»</strong>. Ви яскраво виявляєте творчі здібності, естетичне сприйняття та художній смак. Підходящі професії: дизайнер, художник, журналіст, режисер, актор, фотограф."
+            };
+
+            let categoryNames = {
+                nature: "Людина — Природа",
+                tech: "Людина — Техніка",
+                people: "Людина — Людина",
+                signs: "Людина — Знакова система",
+                art: "Людина — Художній образ"
             };
 
             document.getElementById("result-text").innerHTML = descriptions[bestType];
+            
+            let breakdownHtml = "<strong>Бали за всіма категоріями:</strong><ul style='margin: 0.5rem 0 0 1.2rem; text-align: left;'>";
+            for (let key in scores) {
+                breakdownHtml += `<li>${categoryNames[key]}: <strong>${scores[key]}</strong> балів</li>`;
+            }
+            breakdownHtml += "</ul>";
+            
+            document.getElementById("scores-breakdown").innerHTML = breakdownHtml;
             document.getElementById("result-container").style.display = "block";
         }
 
@@ -233,10 +367,15 @@
             scores = { nature: 0, tech: 0, people: 0, signs: 0, art: 0 };
             document.getElementById("result-container").style.display = "none";
             document.getElementById("quiz-container").style.display = "block";
+            document.getElementById("next-btn").style.display = "inline-block";
             loadQuestion();
         }
 
-        window.onload = loadQuestion;
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("next-btn").addEventListener("click", nextQuestion);
+            document.getElementById("restart-btn").addEventListener("click", restartQuiz);
+            loadQuestion();
+        });
     </script>
 </body>
 </html>
