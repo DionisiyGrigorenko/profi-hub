@@ -13,19 +13,66 @@
             --teal: #0d9488;
             --bg-gradient: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 40%, #F3E8FF 100%);
             --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: #E2E8F0;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --border-radius: 16px;
+            --nav-bg: #ffffff;
+            --box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        [data-theme="dark"] {
+            --primary: #818CF8;
+            --primary-dark: #6366F1;
+            --teal: #2DD4BF;
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            --card-bg: rgba(30, 41, 59, 0.88);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --nav-bg: #1E293B;
+            --box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
         body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; line-height: 1.6; }
         
         nav {
-            background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center;
-            gap: 1.25rem; padding: 1rem; position: sticky; top: 0; z-index: 100; flex-wrap: wrap;
+            background: var(--nav-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
         }
-        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
-        nav a:hover, nav a.active { color: var(--primary); }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
+        nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
+
+        /* Кнопка перемикання теми */
+        .theme-toggle {
+            background: none;
+            border: 1.5px solid var(--text-muted);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .theme-toggle:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            transform: scale(1.05);
+        }
 
         header { text-align: center; padding: 2.5rem 1rem 1.5rem 1rem; }
         header h1 { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 0.4rem; }
@@ -34,28 +81,28 @@
         .container { max-width: 900px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
 
         .advice-card {
-            background: var(--card-bg); border-radius: var(--border-radius); border: 1.5px solid #E2E8F0;
-            padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            background: var(--card-bg); border-radius: 16px; border: 1.5px solid var(--card-border);
+            padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--box-shadow);
         }
-        .advice-card h3 { color: var(--primary); font-size: 1.25rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
-        .advice-card p { color: #475569; font-size: 0.98rem; margin-bottom: 1rem; }
+        .advice-card h3 { color: var(--teal); font-size: 1.25rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
+        .advice-card p { color: var(--text-muted); font-size: 0.98rem; margin-bottom: 1rem; }
 
         .quote-box {
-            background: #EEF2FF; border-left: 4px solid var(--primary); padding: 1.25rem; border-radius: 0 12px 12px 0;
-            margin: 1.25rem 0; font-style: italic; color: #334155; font-size: 0.96rem;
+            background: rgba(13, 148, 136, 0.08); border-left: 4px solid var(--teal); padding: 1.25rem; border-radius: 0 12px 12px 0;
+            margin: 1.25rem 0; font-style: italic; color: var(--text-main); font-size: 0.96rem; border: 1px solid var(--card-border); border-left-width: 4px;
         }
         .quote-author {
-            display: block; text-align: right; font-style: normal; font-weight: 700; font-size: 0.85rem; color: var(--primary-dark); margin-top: 0.5rem;
+            display: block; text-align: right; font-style: normal; font-weight: 700; font-size: 0.85rem; color: var(--teal); margin-top: 0.5rem;
         }
 
         .checklist { list-style: none; margin-top: 1rem; }
-        .checklist li { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; margin-bottom: 0.75rem; color: #334155; font-size: 0.95rem; }
+        .checklist li { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-main); font-size: 0.95rem; }
         .checklist i { color: var(--teal); margin-top: 4px; }
 
-        footer { text-align: center; padding: 1.5rem; background: #ffffff; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: auto; }
+        footer { text-align: center; padding: 1.5rem; background: var(--nav-bg); color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(100,100,100,0.1); margin-top: auto; }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
     <nav>
         <a href="index.html">Головна</a>
@@ -64,6 +111,9 @@
         <a href="future-jobs.html">Професії майбутнього</a>
         <a href="parents.html" class="active">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
+        <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
     </nav>
 
     <header>
@@ -113,5 +163,18 @@
         Вихренко Ірина, Умань, 2026 рік
     </footer>
 
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
 </body>
 </html>
