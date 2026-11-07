@@ -69,7 +69,6 @@
         }
         .card h2 { color: var(--primary-dark); margin-top: 0; font-size: 1.6rem; }
         
-        /* Зменшені та акуратні зображення */
         .image-container {
             margin: 1.25rem 0;
             text-align: center;
@@ -88,7 +87,6 @@
             font-style: italic;
         }
 
-        /* Картки ресурсів з логотипами */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -116,17 +114,23 @@
             gap: 12px;
             margin-bottom: 0.75rem;
         }
-        .resource-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #fff;
-            padding: 4px;
-            border: 1px solid #e2e8f0;
+        .resource-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
-        .resource-item h4 { margin: 0; color: var(--primary-dark); font-size: 1.05rem; }
+        .icon-diia { background: #1e293b; }
+        .icon-work { background: #0d9488; }
+        .icon-vstup { background: #2563eb; }
+
+        .resource-item h4 { margin: 0; color: var(--text-color); font-size: 1.1rem; }
         .resource-item p { font-size: 0.9rem; color: #475569; margin-bottom: 1.25rem; line-height: 1.5; }
         .resource-item a { 
             color: var(--primary); 
@@ -139,7 +143,6 @@
         }
         .resource-item a:hover { text-decoration: underline; }
 
-        /* Стилі форми зворотного зв'язку */
         .feedback-form {
             background: #f8fafc;
             padding: 1.75rem;
@@ -232,7 +235,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://osvita.diia.gov.ua/images/favicons/favicon-32x32.png" alt="Логотип Дія.Освіта" class="resource-logo">
+                            <div class="resource-icon icon-diia">Дія</div>
                             <h4>Дія.Освіта</h4>
                         </div>
                         <p>Профорієнтаційні тести, симулятори професій та освітні серіали про затребувані фахи.</p>
@@ -244,7 +247,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://www.dcz.gov.ua/themes/custom/dcz/favicon.ico" alt="Логотип Служби зайнятості" class="resource-logo">
+                            <div class="resource-icon icon-work">ДСЗ</div>
                             <h4>Служба зайнятості</h4>
                         </div>
                         <p>Спеціалізована платформа для молоді з підбору професій та консультацій кар'єрних радників.</p>
@@ -256,7 +259,7 @@
                 <div class="resource-item">
                     <div>
                         <div class="resource-header">
-                            <img src="https://vstup.edbo.gov.ua/assets/img/favicons/favicon.ico" alt="Логотип ЄДЕБО" class="resource-logo">
+                            <div class="resource-icon icon-vstup">Вступ</div>
                             <h4>ЄДЕБО / Вступ</h4>
                         </div>
                         <p>Офіційна інформація про заклади вищої та фахової передвищої освіти, ліцензії та правила прийому.</p>
