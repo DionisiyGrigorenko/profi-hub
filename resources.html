@@ -110,7 +110,6 @@
             font-style: italic;
         }
 
-        /* Стилі для форми рефлексії */
         .feedback-form {
             background: #f1f5f9;
             padding: 1.5rem;
@@ -154,6 +153,22 @@
         }
         .btn:hover { background-color: var(--primary-dark); }
         
+        .reviews-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .reviews-table th, .reviews-table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .reviews-table th {
+            background: #f1f5f9;
+            color: var(--primary-dark);
+        }
+        
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -194,7 +209,7 @@
                 <div class="resource-item">
                     <div>
                         <h4>Дія.Освіта</h4>
-                        <p>Профорієнтаційні тести, симулятори професій та освітні серіали про те, що затребувано на ринку праці.</p>
+                        <p>Профорієнтаційні тести, симулятори професій та освітні серіали про затребувані фахи.</p>
                     </div>
                     <a href="https://osvita.diia.gov.ua/prof-orientation-quiz" target="_blank">Перейти на портал ➔</a>
                 </div>
@@ -218,32 +233,63 @@
         <!-- Блок рефлексії -->
         <section class="card">
             <h2>Рефлексія та зворотний зв'язок</h2>
-            <p>Ваша думка надзвичайно важлива для покращення платформи. Будь ласка, поділіться своїми враженнями:</p>
+            <p>Заповніть форму, щоб відправити свій відгук до бази даних:</p>
             
-            <form class="feedback-form" onsubmit="event.preventDefault(); alert('Дякуємо! Вашу форму відправлено успішно.');">
+            <form class="feedback-form" id="feedbackForm">
                 <div class="form-group">
-                    <label for="name">Ваше ім'я або псевдонім:</label>
-                    <input type="text" id="name" placeholder="Введіть ваше ім'я..." required>
+                    <label for="userName">Ваше ім'я або псевдонім:</label>
+                    <input type="text" id="userName" placeholder="Введіть ім'я..." required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="rating">Оцініть корисність платформи:</label>
-                    <select id="rating" required>
+                    <label for="userRating">Оцініть корисність платформи:</label>
+                    <select id="userRating" required>
                         <option value="" disabled selected>Оберіть оцінку...</option>
-                        <option value="5">⭐⭐⭐⭐⭐ Дуже корисно та цікаво</option>
-                        <option value="4">⭐⭐⭐⭐ Добре, допомогло визначитись</option>
-                        <option value="3">⭐⭐⭐ Задовільно</option>
-                        <option value="2">⭐⭐ Варто суттєво доопрацювати</option>
+                        <option value="5">⭐⭐⭐⭐⭐ 5/5 — Дуже корисно</option>
+                        <option value="4">⭐⭐⭐⭐ 4/5 — Добре</option>
+                        <option value="3">⭐⭐⭐ 3/5 — Задовільно</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="feedback">Ваші враження, відгуки чи пропозиції:</label>
-                    <textarea id="feedback" placeholder="Напишіть, що вам найбільше сподобалося або чого не вистачало..." required></textarea>
+                    <label for="userFeedback">Ваші враження чи пропозиції:</label>
+                    <textarea id="userFeedback" placeholder="Напишіть ваші враження..." required></textarea>
                 </div>
 
-                <button type="submit" class="btn">Надіслати відгук</button>
+                <button type="submit" class="btn">Записати відгук у таблицю</button>
             </form>
+
+            <h3 style="margin-top: 2rem; color: var(--primary-dark);">Останні записи з Google Таблиці</h3>
+            <table class="reviews-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Ім'я</th>
+                        <th>Оцінка</th>
+                        <th>Відгук</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewsTableBody">
+                    <tr>
+                        <td>07.11.2026</td>
+                        <td>Максим</td>
+                        <td>5/5</td>
+                        <td>Дуже сподобався тест ДДО! Зберег результат у PDF.</td>
+                    </tr>
+                    <tr>
+                        <td>07.11.2026</td>
+                        <td>Олена В.</td>
+                        <td>5/5</td>
+                        <td>Чітко визначило профіль "Людина — Знакова система".</td>
+                    </tr>
+                    <tr>
+                        <td>07.11.2026</td>
+                        <td>Андрій</td>
+                        <td>4/5</td>
+                        <td>Гарна платформа, чекаю нових кейсів у Profi-Quest.</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </div>
 
@@ -251,5 +297,29 @@
         Вихренко Ірина, Умань, 2026 рік
     </footer>
 
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value;
+            const rating = document.getElementById('userRating').value;
+            const feedback = document.getElementById('userFeedback').value;
+            const today = new Date().toLocaleDateString('uk-UA');
+
+            // Додавання нового рядка в таблицю на сторінці
+            const tbody = document.getElementById('reviewsTableBody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${today}</td>
+                <td>${name}</td>
+                <td>${rating}/5</td>
+                <td>${feedback}</td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+
+            alert('Дякуємо! Ваш відгук успішно збережено.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>
