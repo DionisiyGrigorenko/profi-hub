@@ -40,7 +40,7 @@
         .resource-item { background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; }
         
         .resource-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem; }
-        .resource-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; padding: 4px; border: 1px solid #CBD5E1; }
+        .resource-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: #fff; padding: 4px; border: 1px solid #CBD5E1; flex-shrink: 0; }
         .resource-item h4 { color: var(--primary-dark); font-size: 1.1rem; margin: 0; }
         .resource-item p { font-size: 0.88rem; color: #64748b; margin-bottom: 1.25rem; }
         .resource-item a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
@@ -67,13 +67,13 @@
 
     <header>
         <h1>Корисні ресурси та рефлексія</h1>
-        <p>Перевірені державні платформи, освітні інструменти та зворотний зв'язок</p>
+        <p>Офіційні державні платформи, освітні інструменти та зворотний зв'язок</p>
     </header>
 
     <div class="container">
         <section class="card">
             <h2>Офіційні освітні та профорієнтаційні платформи</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Скористайтеся державними ініціативами для побудови кар'єри:</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Перевірені ресурси для побудови кар'єрної траєкторії:</p>
 
             <div class="resources-grid">
                 <!-- Дія.Освіта -->
@@ -83,7 +83,7 @@
                             <img src="https://osvita.diia.gov.ua/images/favicons/favicon-32x32.png" alt="Дія.Освіта" class="resource-logo">
                             <h4>Дія.Освіта</h4>
                         </div>
-                        <p>Національна платформа з профорієнтації, тестів та освітніх серіалів.</p>
+                        <p>Національна платформа з профорієнтації, симуляторів професій та освітніх серіалів.</p>
                     </div>
                     <a href="https://osvita.diia.gov.ua/prof-orientation-quiz" target="_blank">Перейти на портал ➔</a>
                 </div>
@@ -95,7 +95,7 @@
                             <img src="https://www.dcz.gov.ua/themes/custom/dcz/favicon.ico" alt="Служба зайнятості" class="resource-logo">
                             <h4>Служба зайнятості</h4>
                         </div>
-                        <p>Платформа для молоді з підбору професій та консультацій кар'єрних радників.</p>
+                        <p>Платформа для молоді з підбору вакансій, кар'єрного консультування та ваучерів на навчання.</p>
                     </div>
                     <a href="https://www.dcz.gov.ua/" target="_blank">Перейти на портал ➔</a>
                 </div>
@@ -107,9 +107,33 @@
                             <img src="https://vstup.edbo.gov.ua/assets/img/favicons/favicon.ico" alt="ЄДЕБО" class="resource-logo">
                             <h4>ЄДЕБО / Вступ</h4>
                         </div>
-                        <p>Офіційна інформація про заклади вищої та фахової передвищої освіти України.</p>
+                        <p>Офіційний державний портал про заклади вищої та фахової передвищої освіти України.</p>
                     </div>
                     <a href="https://vstup.edbo.gov.ua/" target="_blank">Перейти на портал ➔</a>
+                </div>
+
+                <!-- МОН України -->
+                <div class="resource-item">
+                    <div>
+                        <div class="resource-header">
+                            <img src="https://mon.gov.ua/favicon.ico" alt="МОН України" class="resource-logo">
+                            <h4>МОН України</h4>
+                        </div>
+                        <p>Офіційний сайт Міністерства освіти і науки України з новинами щодо вступу та реформ.</p>
+                    </div>
+                    <a href="https://mon.gov.ua/" target="_blank">Перейти на портал ➔</a>
+                </div>
+
+                <!-- УЦОЯО -->
+                <div class="resource-item">
+                    <div>
+                        <div class="resource-header">
+                            <img src="https://testportal.gov.ua/favicon.ico" alt="УЦОЯО" class="resource-logo">
+                            <h4>УЦОЯО</h4>
+                        </div>
+                        <p>Український центр оцінювання якості освіти — вся інформація про підготовку до НМТ.</p>
+                    </div>
+                    <a href="https://testportal.gov.ua/" target="_blank">Перейти на портал ➔</a>
                 </div>
             </div>
         </section>
