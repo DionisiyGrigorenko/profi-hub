@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профорієнтаційний навігатор | Головна</title>
+    <title>Профорієнтаційний навігатор | Корисні ресурси</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --accent: #0d9488;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-color: #1e293b;
@@ -28,18 +27,18 @@
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 3rem 1rem;
+            padding: 2.5rem 1rem;
             text-align: center;
         }
-        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: -0.5px; }
-        header p { margin-top: 0.75rem; font-size: 1.2rem; opacity: 0.95; }
+        header h1 { margin: 0; font-size: 2.3rem; }
+        header p { margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9; }
 
         nav {
             background: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             padding: 1rem;
             position: sticky;
             top: 0;
@@ -54,58 +53,35 @@
         nav a:hover, nav a.active { color: var(--primary); }
 
         .container {
-            max-width: 1000px;
-            margin: 2.5rem auto;
+            max-width: 900px;
+            margin: 2rem auto;
             padding: 0 1rem;
             flex: 1;
         }
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 2.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
         }
-        .card h2 { color: var(--primary-dark); margin-top: 0; font-size: 1.8rem; }
-        
-        .features-grid {
+        .card h2 { color: var(--primary-dark); margin-top: 0; }
+        .resources-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
-        .feature-item {
+        .resource-item {
             background: #f8fafc;
-            border-left: 4px solid var(--primary);
+            border: 1px solid #e2e8f0;
             padding: 1.25rem;
-            border-radius: 0 8px 8px 0;
-        }
-        .feature-item h3 { margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--primary-dark); }
-        .feature-item p { margin: 0; font-size: 0.95rem; color: #475569; }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.85rem 2rem;
             border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s;
-            margin-top: 1.5rem;
         }
-        .btn:hover { background-color: var(--primary-dark); }
+        .resource-item h4 { margin: 0 0 0.5rem 0; color: var(--primary); }
+        .resource-item a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .resource-item a:hover { text-decoration: underline; }
         
-        .image-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-        .image-container img {
-            max-width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -120,50 +96,41 @@
 <body>
 
     <header>
-        <h1>Профорієнтаційний навігатор</h1>
-        <p>Сучасна цифрова платформа для самовизначення учнів 8–11 класів</p>
+        <h1>Корисні ресурси та рефлексія</h1>
+        <p>Державні платформи, інструменти та зворотний зв'язок</p>
     </header>
 
     <nav>
-        <a href="index.html" class="active">Головна</a>
+        <a href="index.html">Головна</a>
         <a href="quest.html">Profi-Quest</a>
         <a href="test.html">Експрес-тест</a>
-        <a href="resources.html">Корисні ресурси</a>
+        <a href="resources.html" class="active">Корисні ресурси</a>
     </nav>
 
     <div class="container">
-        <!-- Блок опису проєкту -->
+        <!-- Блок державних ресурсів -->
         <section class="card">
-            <h2>Про концепцію та мету платформи</h2>
-            <p><strong>«Профорієнтаційний навігатор»</strong> — це інтерактивний веб-ресурс, створений для допомоги старшокласникам у процесі усвідомленого вибору майбутнього освітнього та професійного шляху. Платформа поєднує класичні психологічні методики діагностики, ігрові симуляції (гейміфікацію) та актуальні державні ресурси.</p>
-            
-            <div class="image-container">
-                <Image src="image_agent_tag_2792507619510526133" alt="Профорієнтація та кар'єрне планування молоді" caption="Цифрові інструменти професійного самовизначення" />
+            <h2>Державні платформи з профорієнтації</h2>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <h4>Дія.Освіта</h4>
+                    <p>Профорієнтаційні тести, освітні серіали про затребувані професії.</p>
+                    <a href="https://osvita.diia.gov.ua/prof-orientation-quiz" target="_blank">Перейти на портал ➔</a>
+                </div>
+                <div class="resource-item">
+                    <h4>Державна служба зайнятості</h4>
+                    <p>Платформа для молоді з підбору кар'єрного шляху.</p>
+                    <a href="https://www.dcz.gov.ua/" target="_blank">Перейти на портал ➔</a>
+                </div>
             </div>
-
-            <p>У періоді ранньої юності вибір професії часто супроводжується сумнівами та браком практичного досвіду. Наш ресурс покликаний розширити уявлення учнів 8–11 класів про різноманіття сучасних професій, розвинути навички самоаналізу та знизити рівень тривожності перед майбутніми життєвими викликами.</p>
         </section>
 
-        <!-- Блок ключових модулів -->
+        <!-- Блок рефлексії -->
         <section class="card">
-            <h2>Структура та можливості ресурсу</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>🎮 Profi-Quest</h3>
-                    <p>Інтерактивні міні-ігри та практичні кейси для занурення у специфіку різних галузей діяльності.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>📝 Експрес-тест</h3>
-                    <p>Швидка діагностика професійних схильностей за класичними критеріями для виявлення індивідуального профілю.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🌐 Корисні ресурси</h3>
-                    <p>Прямі посилання на державні платформи («Дія.Освіта», служба зайнятості) та форма рефлексії.</p>
-                </div>
-            </div>
-
-            <div style="text-align: center;">
-                <a href="test.html" class="btn">Пройти експрес-тест ➔</a>
+            <h2>Рефлексія та зворотний зв'язок</h2>
+            <p>Поділіться враженнями від використання платформи для покращення профорієнтаційної роботи:</p>
+            <div style="background: #f1f5f9; padding: 2rem; border-radius: 8px; text-align: center; color: #64748b;">
+                <p>[Тут буде вбудована Google Форма рефлексії для пункту 2.4]</p>
             </div>
         </section>
     </div>
