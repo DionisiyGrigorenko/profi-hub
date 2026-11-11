@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast) -->
+    <!-- Підключення спільних скриптів -->
     <script src="common.js" defer></script>
 
     <style>
@@ -62,7 +62,6 @@
         nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
         nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
 
-        /* Кнопка перемикання теми */
         .theme-toggle {
             background: none;
             border: 1.5px solid var(--text-muted);
@@ -155,6 +154,7 @@
         <a href="future-jobs.html">Професії майбутнього</a>
         <a href="parents.html">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
+        <a href="myths.html">Міфи і факти</a>
         <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
             <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
@@ -253,7 +253,7 @@
             { id: 15, cat: 'people', icon: 'fa-graduation-cap', badge: 'Освіта', title: 'Навчання інших', text: 'Подобається пояснювати складні речі просто та навчати інших людей новому?' },
             { id: 16, cat: 'it', icon: 'fa-brain', badge: 'ШІ та Дані', title: 'Штучний Інтелект', text: 'Захоплюєшся можливостями ChatGPT, Midjourney та розвитком ШІ?' },
             { id: 17, cat: 'business', icon: 'fa-scale-balanced', badge: 'Право', title: 'Закони та Захист', text: 'Цікаво відстоювати справедливість, вивчати закони та правильність договорів?' },
-            { id: 18, cat: 'design', icon: 'fa-house-laptop', badge: 'Простір', title: 'Інтер\'єр та Архітектура', text: 'Любиш планувати простір, проектирувати будинки чи дизайн кімнат?' },
+            { id: 18, cat: 'design', icon: 'fa-house-laptop', badge: 'Простір', title: 'Інтер\'єр та Архітектура', text: 'Любиш планивати простір, проектирувати будинки чи дизайн кімнат?' },
             { id: 19, cat: 'media', icon: 'fa-video', badge: 'Відеовиробництво', title: 'Кіно та Монтаж', text: 'Хотів би створювати якісні відеоролики, обирати ракурси та працювати зі звуком?' },
             { id: 20, cat: 'business', icon: 'fa-lightbulb', badge: 'Стартапи', title: 'Генерація ідей', text: 'Постійно придумуєш нові ідеї для продуктів, сервісів чи покращення життя?' }
         ];
