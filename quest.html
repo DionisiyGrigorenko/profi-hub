@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast) -->
+    <script src="common.js" defer></script>
+
     <style>
         :root {
             --primary: #4F46E5;
@@ -232,18 +235,6 @@
     </footer>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-
         const questions = [
             { id: 1, cat: 'it', icon: 'fa-code', badge: 'Технології', title: 'Створення програм', text: 'Тобі подобається розбиратися, як влаштовані додатки, сайти чи написати свій код?' },
             { id: 2, cat: 'design', icon: 'fa-palette', badge: 'Творчість', title: 'Візуальний стиль', text: 'Любиш малювати, обробляти фото, монтувати відео чи вибирати кольори для дизайну?' },
