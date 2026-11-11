@@ -2,14 +2,17 @@
    COMMON.JS — Універсальні скрипти для SkillUp
    ========================================== */
 
-// 1. Управління темою (світла / темна) з збереженням вибору
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Відновлення теми з localStorage
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
-    // Створюємо кнопку "Нагору" автоматично на кожній сторінці
+    // 2. Створення кнопки "Нагору"
     createScrollTopButton();
+
+    // 3. Автоматичне підсвічування активної сторінки в меню
+    highlightActiveNavLink();
 });
 
 function toggleTheme() {
@@ -29,10 +32,23 @@ function updateThemeIcon(theme) {
     }
 }
 
+// Автоматичне підсвічування посилання активної сторінки
+function highlightActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('nav a');
+    
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
 
-// 2. Кнопка «Нагору» (Scroll to Top)
+// Кнопка «Нагору» (Scroll to Top)
 function createScrollTopButton() {
-    // Перевіряємо, чи кнопка вже існує
     if (document.getElementById('scrollTopBtn')) return;
 
     const btn = document.createElement('button');
@@ -40,7 +56,6 @@ function createScrollTopButton() {
     btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
     btn.title = 'Нагору';
     
-    // Стилі для кнопки
     btn.style.cssText = `
         position: fixed;
         bottom: 25px;
@@ -71,7 +86,6 @@ function createScrollTopButton() {
 
     document.body.appendChild(btn);
 
-    // Показуємо/ховаємо при прокручуванні
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
             btn.style.opacity = '1';
@@ -83,8 +97,7 @@ function createScrollTopButton() {
     });
 }
 
-
-// 3. Універсальні Toast-повідомлення (красива заміна alert)
+// Toast-сповіщення (заміна alert)
 function showToast(message, type = 'success') {
     let container = document.getElementById('toastContainer');
     if (!container) {
@@ -121,13 +134,11 @@ function showToast(message, type = 'success') {
     toast.innerText = message;
     container.appendChild(toast);
 
-    // Анімація появи
     setTimeout(() => {
         toast.style.opacity = '1';
         toast.style.transform = 'translateY(0)';
     }, 10);
 
-    // Зникнення через 3.5 секунди
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(-20px)';
