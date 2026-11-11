@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp | Міфи та факти про професії</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Підключення спільних скриптів та стилів середовища -->
+    <script src="common.js" defer></script>
+
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --teal: #0d9488;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg-gradient: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 40%, #F3E8FF 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: #E2E8F0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --nav-bg: #ffffff;
+            --box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818CF8;
+            --primary-dark: #6366F1;
+            --teal: #2DD4BF;
+            --success: #34D399;
+            --danger: #F87171;
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            --card-bg: rgba(30, 41, 59, 0.88);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --nav-bg: #1E293B;
+            --box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-main); display: flex; flex-direction: column; line-height: 1.6; }
+
+        nav {
+            background: var(--nav-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
+        nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
+
+        .theme-toggle {
+            background: none;
+            border: 1.5px solid var(--text-muted);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .theme-toggle:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            transform: scale(1.05);
+        }
+
+        header { text-align: center; padding: 2.5rem 1rem 1.5rem 1rem; }
+        header h1 { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 0.4rem; }
+        header p { color: var(--text-muted); font-size: 1.05rem; }
+
+        .container { max-width: 750px; margin: 0 auto 3rem auto; padding: 0 1rem; flex: 1; width: 100%; }
+
+        .card { background: var(--card-bg); border-radius: 20px; border: 1.5px solid var(--card-border); padding: 2.5rem 2rem; box-shadow: var(--box-shadow); text-align: center; position: relative; overflow: hidden; }
+        
+        .progress-container { width: 100%; height: 8px; background: rgba(150, 150, 150, 0.2); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--teal), var(--primary)); transition: width 0.3s ease; border-radius: 10px; }
+
+        .game-counter { font-size: 0.85rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        
+        .myth-card-title { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.5rem; min-height: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.5; }
+        
+        .buttons-group { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .game-btn { flex: 1; max-width: 200px; padding: 1rem; border: none; border-radius: 14px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.2s, opacity 0.2s; }
+        .game-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-true { background: linear-gradient(135deg, #10B981, #059669); }
+        .btn-false { background: linear-gradient(135deg, #EF4444, #DC2626); }
+
+        .explanation-box { background: rgba(13, 148, 136, 0.08); border: 1.5px solid var(--card-border); border-radius: 14px; padding: 1.25rem; margin-top: 1.5rem; font-size: 0.96rem; color: var(--text-main); display: none; text-align: left; animation: fadeIn 0.3s ease; }
+        
+        .next-btn { display: none; margin: 1.5rem auto 0 auto; background: var(--teal); color: #fff; padding: 0.8rem 2rem; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3); }
+        
+        .result-screen { display: none; animation: fadeIn 0.4s ease; }
+        .result-screen h3 { font-size: 1.8rem; color: var(--teal); margin-bottom: 1rem; font-weight: 800; }
+        .result-score { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.5rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer { text-align: center; padding: 1.5rem; background: var(--nav-bg); color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(100,100,100,0.1); margin-top: auto; }
+    </style>
+</head>
+<body data-theme="light">
+
+    <nav>
+        <a href="index.html">Головна</a>
+        <a href="quest.html">Profi-Quest</a>
+        <a href="test.html">Експрес-тест</a>
+        <a href="future-jobs.html">Професії майбутнього</a>
+        <a href="parents.html">Батькам</a>
+        <a href="resources.html">Корисні ресурси</a>
+        <a href="myths.html" class="active">Міфи і факти</a>
+        <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+    </nav>
+
+    <header>
+        <h1>Міфи та факти про професії</h1>
+        <p>Перевір свої знання та розвінчай популярні стереотипи щодо світу кар'єри</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            
+            <!-- Ігровий екран -->
+            <div id="game-screen">
+                <div class="game-counter" id="game-counter">Питання 1 з 6</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div class="myth-card-title" id="mythText">Завантаження питання...</div>
+
+                <div class="buttons-group" id="buttonsGroup">
+                    <button class="game-btn btn-true" onclick="handleAnswer(true)"><i class="fa-solid fa-check"></i> Правда</button>
+                    <button class="game-btn btn-false" onclick="handleAnswer(false)"><i class="fa-solid fa-xmark"></i> Міф</button>
+                </div>
+
+                <div class="explanation-box" id="explanationBox"></div>
+
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Наступне питання ➔</button>
+            </div>
+
+            <!-- Фінальний екран результатів -->
+            <div class="result-screen" id="resultScreen">
+                <h3>Вікторину завершено! 🎉</h3>
+                <p class="result-score" id="resultScoreText">Твій результат: 0 з 6</p>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.98rem;" id="resultComment"></p>
+                <button class="next-btn" style="display: inline-block;" onclick="restartGame()">Пройти гру знову 🔄</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        Вихренко Ірина, Умань, 2026 рік
+    </footer>
+
+    <script>
+        const mythsData = [
+            {
+                text: "Чи правда, що програмісту зовсім не обов'язково знати математику?",
+                answer: false,
+                explanation: "Міф! Математична логіка необхідна для побудови складних алгоритмів, оптимізації баз даних, комп'ютерного зору та розробки штучного інтелекту."
+            },
+            {
+                text: "Чи правда, що робота у сфері IT — це виключно щоденне написання коду годинниками?",
+                answer: false,
+                explanation: "Міф! Окрім розробників, в IT працюють тестувальники (QA), UI/UX дизайнери, бізнес-аналітики, проєкт-менеджери та фахівці з кібербезпеки."
+            },
+            {
+                text: "Чи правда, що штучний інтелект у майбутньому повністю замінить творчі професії?",
+                answer: false,
+                explanation: "Міф! ШІ є потужним інструментом для генерації ідей, але справжня емпатія, унікальний життєвий досвід та глибока креативність притаманні лише людям."
+            },
+            {
+                text: "Чи правда, що результати НМТ визначають успіх людини у всій подальшій кар'єрі?",
+                answer: false,
+                explanation: "Міф! Екзамени — це лише важливий стартовий етап. Навички комунікації, вміння працювати в команді та прагнення вчитися важать набагато більше."
+            },
+            {
+                text: "Чи правда, що для відкриття власного бізнесу обов'язково потрібен великий стартовий капітал?",
+                answer: false,
+                explanation: "Міф! Сучасні цифрові стартапи та сервіси часто починаються з мінімальними інвестиціями («гаражні ініціативи»), головне — цінність продукту та ідея."
+            },
+            {
+                text: "Чи правда, що вибір професії у 10–11 класах є останнім і змінити його вже неможливо?",
+                answer: false,
+                explanation: "Міф! У сучасному світі концепція «навчання впродовж життя» (lifelong learning) дозволяє людям успішно опановувати нові спеціальності в будь-якому віці."
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentIndex >= mythsData.length) {
+                showResults();
+                return;
+            }
+
+            const current = mythsData[currentIndex];
+            document.getElementById('game-counter').innerText = `Питання ${currentIndex + 1} з ${mythsData.length}`;
+            document.getElementById('mythText').innerText = current.text;
+            document.getElementById('explanationBox').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('buttonsGroup').style.display = 'flex';
+
+            const progress = (currentIndex / mythsData.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        function handleAnswer(userChoice) {
+            const current = mythsData[currentIndex];
+            const isCorrect = userChoice === current.answer;
+
+            if (isCorrect) score++;
+
+            // Ховаємо кнопки вибору та показуємо пояснення
+            document.getElementById('buttonsGroup').style.display = 'none';
+            
+            const expBox = document.getElementById('explanationBox');
+            expBox.style.display = 'block';
+            expBox.innerHTML = `
+                <div style="margin-bottom: 6px; font-weight: 700; color: ${isCorrect ? 'var(--success)' : 'var(--danger)'};">
+                    ${isCorrect ? '✅ Правильно!' : '❌ Помилка!'}
+                </div>
+                <div>${current.explanation}</div>
+            `;
+
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('progressBar').style.width = '100%';
+
+            document.getElementById('resultScoreText').innerText = `Твій результат: ${score} з ${mythsData.length}`;
+
+            let comment = "";
+            if (score === mythsData.length) {
+                comment = "Неймовірно! Ти чудово орієнтуєшся у сучасних кар'єрних трендах і не віриш у стереотипи.";
+            } else if (score >= 4) {
+                comment = "Чудовий результат! Ти добре розумієш особливості сучасного ринку праці.";
+            } else {
+                comment = "Цікавий результат! Варто уважніше дослідити сучасні професії та розвіяти інші міфи на нашому сайті.";
+            }
+            document.getElementById('resultComment').innerText = comment;
+        }
+
+        function restartGame() {
+            currentIndex = 0;
+            score = 0;
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            loadQuestion();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>
