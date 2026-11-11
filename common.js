@@ -1,76 +1,136 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. АВТОМАТИЧНЕ ЗАСТОСУВАННЯ ТЕМИ
-    const savedTheme = localStorage.getItem('skillup_theme') || 'light';
+/* ==========================================
+   COMMON.JS — Універсальні скрипти для SkillUp
+   ========================================== */
+
+// 1. Управління темою (світла / темна) з збереженням вибору
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
 
-    // 2. ГЕНЕРАЦІЯ НАВІГАЦІЇ
-    const navHTML = `
-        <nav>
-            <a href="index.html" data-page="index.html">Головна</a>
-            <a href="quest.html" data-page="quest.html">Profi-Quest</a>
-            <a href="test.html" data-page="test.html">Експрес-тест</a>
-            <a href="future-jobs.html" data-page="future-jobs.html">Професії майбутнього</a>
-            <a href="parents.html" data-page="parents.html">Батькам</a>
-            <a href="resources.html" data-page="resources.html">Корисні ресурси</a>
-            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
-                <i class="${savedTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon'}" id="themeIcon"></i>
-            </button>
-        </nav>
-    `;
-    
-    // Вставляємо навігацію на початок body, якщо її ще немає
-    if (!document.querySelector('nav')) {
-        document.body.insertAdjacentHTML('afterbegin', navHTML);
-    }
-
-    // Підсвічування активної сторінки в меню
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll('nav a').forEach(link => {
-        if (link.getAttribute('data-page') === currentPage) {
-            link.classList.add('active');
-        }
-    });
-
-    // 3. ГЕНЕРАЦІЯ ФУТЕРА
-    const footerHTML = `
-        <footer>
-            Вихренко Ірина, Умань, 2026 рік
-        </footer>
-    `;
-    if (!document.querySelector('footer')) {
-        document.body.insertAdjacentHTML('beforeend', footerHTML);
-    }
-
-    // 4. СТВОРЕННЯ КНОПКИ "ВГОРУ"
-    if (!document.getElementById('scrollTopBtn')) {
-        const scrollBtn = document.createElement('button');
-        scrollBtn.id = 'scrollTopBtn';
-        scrollBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
-        scrollBtn.title = 'Нагору';
-        scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.body.appendChild(scrollBtn);
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
-        });
-    }
+    // Створюємо кнопку "Нагору" автоматично на кожній сторінці
+    createScrollTopButton();
 });
 
-// Глобальна функція перемикання теми
 function toggleTheme() {
     const body = document.body;
-    const icon = document.getElementById('themeIcon');
-    let currentTheme = body.getAttribute('data-theme');
-    let newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
     body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('skillup_theme', newTheme);
-    
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('themeIcon');
     if (icon) {
-        icon.className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
+}
+
+
+// 2. Кнопка «Нагору» (Scroll to Top)
+function createScrollTopButton() {
+    // Перевіряємо, чи кнопка вже існує
+    if (document.getElementById('scrollTopBtn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'scrollTopBtn';
+    btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+    btn.title = 'Нагору';
+    
+    // Стилі для кнопки
+    btn.style.cssText = `
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 42px;
+        height: 42px;
+        background: var(--teal, #0d9488);
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+        z-index: 999;
+    `;
+
+    btn.addEventListener('mouseover', () => btn.style.transform = 'scale(1.1)');
+    btn.addEventListener('mouseout', () => btn.style.transform = 'scale(1)');
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.body.appendChild(btn);
+
+    // Показуємо/ховаємо при прокручуванні
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btn.style.opacity = '1';
+            btn.style.visibility = 'visible';
+        } else {
+            btn.style.opacity = '0';
+            btn.style.visibility = 'hidden';
+        }
+    });
+}
+
+
+// 3. Універсальні Toast-повідомлення (красива заміна alert)
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.style.cssText = `
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        `;
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    const bgColors = type === 'success' ? '#0d9488' : '#e11d48';
+    
+    toast.style.cssText = `
+        background: ${bgColors};
+        color: #ffffff;
+        padding: 14px 20px;
+        border-radius: 10px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s, transform 0.3s;
+    `;
+    toast.innerText = message;
+    container.appendChild(toast);
+
+    // Анімація появи
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+    }, 10);
+
+    // Зникнення через 3.5 секунди
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
 }
