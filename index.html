@@ -6,6 +6,10 @@
     <title>SkillUp | Твій кар'єрний навігатор</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast) -->
+    <script src="common.js" defer></script>
+
     <style>
         :root {
             --primary: #4F46E5;
@@ -187,20 +191,6 @@
     <footer>
         Вихренко Ірина, Умань, 2026 рік
     </footer>
-
-    <script>
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-    </script>
 
 </body>
 </html>
