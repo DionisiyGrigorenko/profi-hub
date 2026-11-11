@@ -1,5 +1,5 @@
 /* ==========================================
-   COMMON.JS — Універсальні скрипти для SkillUp
+   COMMON.JS — Повний код для SkillUp
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -221,7 +221,6 @@ function createFeedbackWidget() {
     document.body.appendChild(floatBtn);
     document.body.appendChild(modalOverlay);
 
-    // Поведінка вікна (відкриття/закриття)
     const modalContent = document.getElementById('feedbackModalContent');
 
     floatBtn.addEventListener('click', () => {
@@ -241,16 +240,11 @@ function createFeedbackWidget() {
         if (e.target === modalOverlay) closeModal();
     });
 
-    // Відправка даних форми у Google Таблиці
+    // Відправка даних форми
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYsST0NBYYUoenroV1rPzW-AoIs9nvP4hZvL1sn1yw0E-HZvC7Vw5KWvnJpUWxIeYMOw/exec";
 
     document.getElementById('globalFeedbackForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('globalSubmitBtn');
-        const oldText = btn.innerHTML;
-        
-        btn.disabled = true;
-        btn.innerHTML = 'Відправляється...';
 
         const data = {
             name: document.getElementById('globalUserName').value,
@@ -258,24 +252,17 @@ function createFeedbackWidget() {
             feedback: document.getElementById('globalUserFeedback').value
         };
 
+        // Миттєво закриваємо вікно, очищаємо форму та виводимо сповіщення
+        closeModal();
+        showToast('Дякуємо! Ваш відгук успішно надіслано.', 'success');
+        this.reset();
+
         fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(data)
-        })
-        .then(() => {
-            showToast('Дякуємо! Ваш відгук успішно надіслано.', 'success');
-            this.reset();
-            closeModal();
-        })
-        .catch(() => {
-            showToast('Помилка при відправці. Спробуйте ще раз.', 'error');
-        })
-        .finally(() => {
-            btn.disabled = false;
-            btn.innerHTML = oldText;
-        });
+        }).catch(err => console.log('Feedback error:', err));
     });
 }
 
@@ -289,7 +276,7 @@ function showToast(message, type = 'success') {
             position: fixed;
             top: 25px;
             right: 25px;
-            z-index: 9999;
+            z-index: 99999;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -308,7 +295,7 @@ function showToast(message, type = 'success') {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 0.95rem;
         font-weight: 600;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         opacity: 0;
         transform: translateY(-20px);
         transition: opacity 0.3s, transform 0.3s;
