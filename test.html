@@ -6,6 +6,10 @@
     <title>SkillUp | Експрес-тест ДДО Клімова</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast) -->
+    <script src="common.js" defer></script>
+
     <style>
         :root {
             --primary: #4F46E5;
@@ -153,18 +157,6 @@
     </footer>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-
         const questions = [
             { pair: [{ text: "Доглядати за тваринами", type: "nature" }, { text: "Обслуговувати машини, прилади", type: "tech" }] },
             { pair: [{ text: "Обговорювати наукові книги", type: "signs" }, { text: "Обговорювати художні п'єси, картини", type: "art" }] },
