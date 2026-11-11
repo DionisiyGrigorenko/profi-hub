@@ -6,6 +6,10 @@
     <title>SkillUp | Корисні ресурси</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast-сповіщення) -->
+    <script src="common.js" defer></script>
+    
     <style>
         :root {
             --primary: #4F46E5;
@@ -52,7 +56,6 @@
         nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
         nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
 
-        /* Кнопка перемикання теми */
         .theme-toggle {
             background: none;
             border: 1.5px solid var(--text-muted);
@@ -98,8 +101,9 @@
         .form-group label { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 0.4rem; color: var(--text-main); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1.5px solid var(--card-border); border-radius: 8px; font-size: 0.95rem; background: var(--card-bg); color: var(--text-main); }
         
-        .btn { background: linear-gradient(135deg, var(--teal), #0f766e); color: #FFF; padding: 0.8rem; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; text-align: center; transition: opacity 0.2s; }
+        .btn { background: linear-gradient(135deg, var(--teal), #0f766e); color: #FFF; padding: 0.8rem; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; text-align: center; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
         .btn:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
         footer { text-align: center; padding: 1.5rem; background: var(--nav-bg); color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(100,100,100,0.1); margin-top: auto; }
     </style>
@@ -213,7 +217,9 @@
                     <label for="userFeedback">Ваші враження чи пропозиції:</label>
                     <textarea id="userFeedback" placeholder="Напишіть ваші враження..." required style="min-height:90px;"></textarea>
                 </div>
-                <button type="submit" class="btn">Надіслати відгук</button>
+                <button type="submit" class="btn" id="submitBtn">
+                    <span>Надіслати відгук</span>
+                </button>
             </form>
         </section>
     </div>
@@ -223,25 +229,16 @@
     </footer>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYsST0NBYYUoenroV1rPzW-AoIs9nvP4hZvL1sn1yw0E-HZvC7Vw5KWvnJpUWxIeYMOw/exec";
 
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('submitBtn');
+            const originalContent = submitBtn.innerHTML;
+            
+            // Змінюємо вигляд кнопки під час відправки
             submitBtn.disabled = true;
-            submitBtn.innerText = "Відправляється...";
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Відправляється...</span>';
 
             const data = {
                 name: document.getElementById('userName').value,
@@ -256,13 +253,17 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
-                alert('Дякуємо! Ваш відгук успішно надіслано в систему.');
+                // Використовуємо нову функцію showToast з common.js
+                showToast('Дякуємо! Ваш відгук успішно надіслано.', 'success');
                 this.reset();
             })
-            .catch(() => alert('Помилка при відправці. Спробуйте ще раз.'))
+            .catch(() => {
+                showToast('Помилка при відправці. Спробуйте ще раз.', 'error');
+            })
             .finally(() => {
+                // Повертаємо кнопку в початковий стан
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Надіслати відгук";
+                submitBtn.innerHTML = originalContent;
             });
         });
     </script>
