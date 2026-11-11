@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Підключення спільних скриптів (тема, кнопка Нагору, Toast) -->
+    <!-- Підключення спільних скриптів -->
     <script src="common.js" defer></script>
 
     <style>
@@ -56,7 +56,6 @@
         nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
         nav a:hover, nav a.active { color: var(--teal); opacity: 1; }
 
-        /* Кнопка перемикання теми */
         .theme-toggle {
             background: none;
             border: 1.5px solid var(--text-muted);
@@ -115,6 +114,7 @@
         <a href="future-jobs.html">Професії майбутнього</a>
         <a href="parents.html" class="active">Батькам</a>
         <a href="resources.html">Корисні ресурси</a>
+        <a href="myths.html">Міфи і факти</a>
         <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему оформлення">
             <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
