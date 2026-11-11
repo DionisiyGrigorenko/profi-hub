@@ -1,5 +1,5 @@
 /* ==========================================
-   COMMON.JS — Повний код для SkillUp
+   COMMON.JS — Повний код для платформи SkillUp
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,15 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
-    // 2. Створення кнопки "Нагору"
+    // 2. Автоматичне додавання назви платформи в навігацію на всіх сторінках
+    injectBrandToNavbar();
+
+    // 3. Створення кнопки "Нагору"
     createScrollTopButton();
 
-    // 3. Автоматичне підсвічування активної сторінки в меню
+    // 4. Автоматичне підсвічування активної сторінки в меню
     highlightActiveNavLink();
 
-    // 4. Створення глобального віджета відгуків на кожній сторінці
+    // 5. Створення глобального віджета відгуків на кожній сторінці
     createFeedbackWidget();
 });
+
+/* --- Автоматичне додавання бренду в навігацію --- */
+function injectBrandToNavbar() {
+    const nav = document.querySelector('nav');
+    if (!nav || document.getElementById('navBrandLogo')) return;
+
+    const brandLink = document.createElement('a');
+    brandLink.id = 'navBrandLogo';
+    brandLink.href = 'index.html';
+    brandLink.innerHTML = '<i class="fa-solid fa-compass" style="color: var(--teal, #0d9488); margin-right: 6px;"></i> Платформа <strong>"SkillUp"</strong>';
+    
+    brandLink.style.cssText = `
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin-right: auto;
+        padding-left: 5px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-main, #1e293b);
+    `;
+
+    nav.insertBefore(brandLink, nav.firstChild);
+}
 
 /* --- Керування темами --- */
 function toggleTheme() {
@@ -46,7 +73,9 @@ function highlightActiveNavLink() {
         if (href === currentPage) {
             link.classList.add('active');
         } else {
-            link.classList.remove('active');
+            if (link.id !== 'navBrandLogo') {
+                link.classList.remove('active');
+            }
         }
     });
 }
@@ -105,7 +134,6 @@ function createScrollTopButton() {
 function createFeedbackWidget() {
     if (document.getElementById('feedbackModalBtn')) return;
 
-    // 1. Плаваюча кнопка викликання форми (розміщена над кнопкою "Нагору")
     const floatBtn = document.createElement('button');
     floatBtn.id = 'feedbackModalBtn';
     floatBtn.innerHTML = '<i class="fa-solid fa-comment-dots"></i> <span>Відгук</span>';
@@ -135,7 +163,6 @@ function createFeedbackWidget() {
     floatBtn.addEventListener('mouseover', () => floatBtn.style.transform = 'scale(1.05)');
     floatBtn.addEventListener('mouseout', () => floatBtn.style.transform = 'scale(1)');
 
-    // 2. Створення модального контейнера (фон + сама форма)
     const modalOverlay = document.createElement('div');
     modalOverlay.id = 'feedbackModalOverlay';
     modalOverlay.style.cssText = `
@@ -240,7 +267,6 @@ function createFeedbackWidget() {
         if (e.target === modalOverlay) closeModal();
     });
 
-    // Відправка даних форми
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYsST0NBYYUoenroV1rPzW-AoIs9nvP4hZvL1sn1yw0E-HZvC7Vw5KWvnJpUWxIeYMOw/exec";
 
     document.getElementById('globalFeedbackForm').addEventListener('submit', function(e) {
@@ -252,7 +278,6 @@ function createFeedbackWidget() {
             feedback: document.getElementById('globalUserFeedback').value
         };
 
-        // Миттєво закриваємо вікно, очищаємо форму та виводимо сповіщення
         closeModal();
         showToast('Дякуємо! Ваш відгук успішно надіслано.', 'success');
         this.reset();
@@ -266,7 +291,7 @@ function createFeedbackWidget() {
     });
 }
 
-/* --- Toast-сповіщення (спливаючі повідомлення) --- */
+/* --- Toast-сповіщення --- */
 function showToast(message, type = 'success') {
     let container = document.getElementById('toastContainer');
     if (!container) {
